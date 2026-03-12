@@ -1,0 +1,5 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "instructions": "You are a skilled developer. Follow the project workflow defined in .myai/rules/primary-workflow.md. Use agents from .myai/agents/ for specialized tasks. Keep project state updated in docs/STATE.md. Before implementing a plan phase, run `myai validate \"Phase N\"` in the terminal to validate it against docs/SPEC.md and docs/ROADMAP.md.",
+  "model": "anthropic/claude-sonnet-4-5"
+}

@@ -91,7 +91,7 @@ tpai/
 
 ### Phase 1: CLI Scaffold
 **Goal:** Working `tpai` binary with `init`, `update`, `install` commands registered as stubs.
-**Status:** [ ] Pending
+**Status:** [x] Complete
 
 Tasks:
 - [ ] Create `package.json` (ESM, Commander.js, inquirer, chalk, vitest)
@@ -108,7 +108,7 @@ Tasks:
 
 ### Phase 2: Docs Brain Layer
 **Goal:** `tpai init` installs `.tpai/` skeleton and `docs/` brain layer.
-**Status:** [ ] Pending
+**Status:** [x] Complete
 **Depends on:** Phase 1
 
 Tasks:
@@ -127,7 +127,7 @@ Tasks:
 
 ### Phase 3: Hook System
 **Goal:** 5 hooks compiled and wired into `settings.json`. `session-init` loads STATE.md + PROGRESS.md.
-**Status:** [ ] Pending
+**Status:** [x] Complete
 **Depends on:** Phase 1
 
 Tasks:
@@ -142,8 +142,8 @@ Tasks:
 ---
 
 ### Phase 4: Skills Curation
-**Goal:** 29 curated skills in `.tpai/skills/`. All direct copies from CCS.
-**Status:** [ ] Pending
+**Goal:** 30 curated skills in `.myai/skills/`. All direct copies from CCS.
+**Status:** [x] Complete
 **Depends on:** Phase 1
 
 Tasks:
@@ -157,7 +157,7 @@ Tasks:
 
 ### Phase 5: Agents
 **Goal:** 12 agents in `.tpai/agents/`. 9 copied from CCS, 3 adapted from GSD.
-**Status:** [ ] Pending
+**Status:** [x] Complete
 **Depends on:** Phase 4
 
 Tasks:
@@ -170,7 +170,7 @@ Tasks:
 
 ### Phase 6: Slash Commands (8 Total)
 **Goal:** 8 slash commands in `.tpai/commands/`.
-**Status:** [ ] Pending
+**Status:** [x] Complete
 **Depends on:** Phase 4, Phase 5
 
 Commands:
@@ -189,7 +189,7 @@ Commands:
 
 ### Phase 7: Rules & Settings
 **Goal:** 4 rule files, CLAUDE.md runtime template, finalized settings.json.
-**Status:** [ ] Pending
+**Status:** [x] Complete
 **Depends on:** Phase 6
 
 Tasks:
@@ -201,7 +201,7 @@ Tasks:
 
 ### Phase 8: Multi-Runtime Installer
 **Goal:** `tpai install` supports all 4 runtimes.
-**Status:** [ ] Pending
+**Status:** [x] Complete
 **Depends on:** Phase 7
 
 Tasks:
@@ -217,7 +217,7 @@ Tasks:
 
 ### Phase 9: Polish + README + Publish
 **Goal:** Publishable to GitHub Packages. Tests pass.
-**Status:** [ ] Pending
+**Status:** [x] Complete
 **Depends on:** All phases
 
 Tasks:
