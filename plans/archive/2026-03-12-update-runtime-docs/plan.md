@@ -14,11 +14,11 @@ type: task
 
 ## Tasks
 
-- [ ] 1. Update `GEMINI.md` agents list — add all 13 agents, remove duplicate `debugger`
-- [ ] 2. Update `AGENTS.md` agents list — same as above
-- [ ] 3. Clarify README: `myai validate` (CLI — prints plan phases) vs `/myai:validate` (slash — interview-based) vs `/myai:verify` (slash — post-build goal check)
-- [ ] 4. Fix README slash commands table description for `/myai:validate` — currently says "interview-based" which is correct but needs to distinguish from CLI `myai validate`
-- [ ] 5. Add missing agents to `runtime-templates/claude/CLAUDE.md` if any are absent
+- [x] 1. Update `GEMINI.md` agents list — add all 13 agents, remove duplicate `debugger`
+- [x] 2. Update `AGENTS.md` agents list — same as above
+- [x] 3. Clarify README: `myai validate` (CLI — prints plan phases) vs `/myai:validate` (slash — interview-based) vs `/myai:verify` (slash — post-build goal check)
+- [x] 4. Fix README slash commands table description for `/myai:validate` — pre-build/post-build distinction added
+- [x] 5. Add `/myai:verify` to `runtime-templates/claude/CLAUDE.md` commands table
 
 ## Notes
 

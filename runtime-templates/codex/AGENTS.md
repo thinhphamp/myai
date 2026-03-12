@@ -44,25 +44,33 @@ Default to task plan for any specific request. Only use phase plan when explicit
 
 ## Available Agents (.myai/agents/)
 
-- `brainstormer` — debates architectural decisions and technical trade-offs before implementation
+- `brainstormer` — debates architectural decisions and trade-offs before implementation
 - `planner` — creates implementation plans
 - `researcher` — conducts technical research
 - `fullstack-developer` — implements features
 - `code-reviewer` — reviews code quality
 - `tester` — writes and runs tests
 - `debugger` — diagnoses bugs
-- `debugger` — diagnoses bugs
+- `docs-manager` — writes and maintains documentation
+- `git-manager` — handles git workflows and commit strategy
+- `ui-ux-designer` — designs UI components and flows
+- `codebase-mapper` — maps and documents existing codebase structure
+- `roadmapper` — defines and updates ROADMAP phases
+- `verifier` — goal-backward phase verification after build
 
-## Plan Validation
+## Plan Validation & Lifecycle
 
-Before implementing, run `myai validate` to surface open questions and confirm decisions:
+Before implementing, validate the plan to surface open questions:
 
 ```bash
-myai validate               # validate the active plan
-myai validate "plan-path"   # validate a specific plan
+myai validate               # print plan phases for review (CLI)
 ```
 
-After completing task plans, run `myai archive` to journal and clean up.
+After completing task plans, archive to journal and clean up:
+
+```bash
+myai archive               # journal + archive task plans (CLI)
+```
 
 ## Code Quality
 

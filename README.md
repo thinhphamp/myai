@@ -39,6 +39,7 @@ myai init --claude     # copies .myai/ system + docs/ templates, wires hooks int
 /myai:cook             # execute the active plan
 /myai:pause            # save session state
 /myai:resume           # restore session from last pause
+/myai:verify           # verify phase goal achievement after build
 /myai:archive          # journal + archive completed task plans
 /myai:progress         # check project status + route to next action
 /myai:kanban           # visual plans dashboard
@@ -64,12 +65,13 @@ myai init --claude     # copies .myai/ system + docs/ templates, wires hooks int
 | Command | Description |
 |---------|-------------|
 | `/myai:new-project` | Initialize docs/ brain layer for a new project |
-| `/myai:plan [task]` | Create a plan for a feature, fix, or phase — auto-detects scope |
-| `/myai:cook` | Execute active plan with domain skill activation |
+| `/myai:plan [task]` | Create a plan for a feature, fix, phase, or parallel multi-agent execution |
+| `/myai:cook` | Execute active plan — sequential by default, `--parallel` spawns concurrent agents |
 | `/myai:progress` | Project-wide status + smart routing to next action |
 | `/myai:pause` | Save session state to `plans/{active}/PROGRESS.md` |
 | `/myai:resume` | Restore session from PROGRESS.md + STATE.md |
-| `/myai:validate [plan]` | Interview-based validation — confirms open questions and decisions before building |
+| `/myai:validate [plan]` | Pre-build: interview-based validation — confirms open questions and decisions |
+| `/myai:verify [phase]` | Post-build: goal-backward verification — checks phase goal achievement |
 | `/myai:archive [plan]` | Write journal entries and archive completed task plans |
 | `/myai:kanban` | Visual plans dashboard |
 
@@ -81,7 +83,7 @@ After `myai init`:
 your-project/
 ├── .myai/              # System files (managed by myai)
 │   ├── agents/         # 13 specialized agents
-│   ├── commands/       # 8 slash commands
+│   ├── commands/       # 9 slash commands
 │   ├── hooks/          # 5 session hooks
 │   ├── rules/          # 4 rule files
 │   ├── skills/         # 30 domain skills
