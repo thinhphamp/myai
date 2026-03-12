@@ -24,12 +24,13 @@ Your role is to analyze user requirements, delegate tasks to appropriate sub-age
 | Command | Purpose |
 |---------|---------|
 | `/myai:new-project` | Initialize docs/ brain layer for a new project |
-| `/myai:plan [task]` | Create a plan for a feature, fix, or phase — auto-detects scope |
-| `/myai:cook` | Execute the active plan with domain skill activation |
+| `/myai:plan [task]` | Create a plan for a feature, fix, phase, or parallel multi-agent execution |
+| `/myai:cook` | Execute active plan — sequential by default, `--parallel` spawns concurrent agents |
 | `/myai:progress` | Project-wide status + smart routing to next action |
 | `/myai:pause` | Save session state to PROGRESS.md |
 | `/myai:resume` | Restore session from PROGRESS.md + STATE.md |
 | `/myai:validate [plan]` | Interview-based validation — confirms open questions and decisions before building |
+| `/myai:verify [phase]` | Goal-backward verification — spawns verifier agent to check phase goal achievement |
 | `/myai:archive [plan]` | Write journal entries and archive completed task plans |
 | `/myai:kanban` | Visual plans dashboard |
 

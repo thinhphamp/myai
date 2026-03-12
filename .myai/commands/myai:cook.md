@@ -15,6 +15,8 @@ allowed-tools:
 
 <objective>
 Execute the active plan from `plans/{active}/plan.md`. Auto-activates domain skills based on plan content. Implements tasks, updates plan progress, and writes a SUMMARY.md on completion.
+
+Supports `--parallel` flag: when the plan has `type: parallel` or `--parallel` is passed, spawns multiple `fullstack-developer` agents for concurrent phases.
 </objective>
 
 <context>
@@ -78,9 +80,68 @@ Announce: "Activating skills: {list}"
 
 Read the relevant skill files from `.myai/skills/{skill-name}/SKILL.md`.
 
-## Step 4: Clarify Focus (if $ARGUMENTS provided)
+## Step 4: Detect Parallel Mode
 
-If `$ARGUMENTS` specifies a task number (e.g., "3") or focus area (e.g., "database"):
+Check if parallel execution applies:
+- `$ARGUMENTS` contains `--parallel`, OR
+- `plan.md` frontmatter has `type: parallel`, OR
+- Phase files (`phase-XX-*.md`) exist in the plan directory
+
+```bash
+ls {active-plan-path}/phase-*.md 2>/dev/null
+```
+
+**If parallel mode detected → skip to Step 4P (Parallel Execution).**
+Otherwise continue to Step 4S (Sequential Execution).
+
+---
+
+## Step 4P: Parallel Execution
+
+Read `plan.md` to get the dependency graph and execution strategy.
+
+### Launch concurrent phases
+
+For each group of phases that can run simultaneously, spawn `fullstack-developer` agents in parallel using the Task tool:
+
+```
+Task(
+  subagent_type="fullstack-developer",
+  prompt="Implement phase file: {plan-path}/phase-01-{name}.md
+  File ownership: {files listed in phase file — touch ONLY these files}
+  Plan context: {plan-path}/plan.md
+  Skills: {detected skills}",
+  description="Phase 01: {name}"
+)
+```
+
+**Rules:**
+- Launch all independent phases simultaneously (one Task call per phase)
+- Wait for all concurrent phases to complete before launching dependent phases
+- Each agent works ONLY on files listed in its phase's file ownership section
+- No file may be modified by two agents simultaneously
+
+**Example execution order from dependency graph:**
+```
+Step 1 (parallel): Phase 01, Phase 02, Phase 03 → launch 3 agents at once
+Step 2 (sequential): Phase 04 → launch after all Step 1 agents complete
+```
+
+### After all phases complete
+
+1. Run `tester` agent on the full codebase
+2. Run `code-reviewer` agent for final review
+3. If critical issues found: fix and re-test
+4. Write SUMMARY.md (see Step 8)
+5. Update STATE.md (see Step 9)
+
+→ **Skip to Step 10 (Confirm)**
+
+---
+
+## Step 4S: Clarify Focus (if $ARGUMENTS provided, sequential mode)
+
+If `$ARGUMENTS` (excluding `--parallel`) specifies a task number (e.g., "3") or focus area (e.g., "database"):
 - Start from that task / focus on that area
 - Skip already-completed tasks
 
@@ -247,9 +308,11 @@ return Response.json({ ok: true }) // static, not real data
 
 <success_criteria>
 - [ ] Active plan loaded (or error shown)
+- [ ] Parallel mode detected (type: parallel or --parallel flag or phase files)
 - [ ] Domain skills auto-activated based on plan content
-- [ ] All tasks executed with real implementation
-- [ ] PROGRESS.md updated after every few tasks
+- [ ] Sequential: all tasks executed with real implementation
+- [ ] Parallel: concurrent agents launched per dependency graph, file ownership respected
+- [ ] PROGRESS.md updated after every few tasks (sequential) or per phase (parallel)
 - [ ] must_haves verified on completion
 - [ ] SUMMARY.md written
 - [ ] docs/STATE.md updated (decisions, plan pointer)

@@ -14,10 +14,10 @@ type: task
 
 ## Tasks
 
-- [ ] 1. Create `.myai/commands/myai:verify.md` — spawns verifier agent with current plan + ROADMAP context, outputs VERIFICATION.md, presents pass/gaps/human-needed result
-- [ ] 2. Audit all references to `/myai:verify` in `myai:cook.md`, `myai:progress.md`, `myai:resume.md`, `primary-workflow.md` — confirm they still make sense or update wording
-- [ ] 3. Update `runtime-templates/claude/CLAUDE.md` — add `/myai:verify` back to commands table
-- [ ] 4. Update README.md — add `/myai:verify` to slash commands table and quick start
+- [x] 1. Create `.myai/commands/myai:verify.md` — spawns verifier agent with current plan + ROADMAP context, outputs VERIFICATION.md, presents pass/gaps/human-needed result
+- [x] 2. Audit all references to `/myai:verify` in `myai:cook.md`, `myai:progress.md`, `myai:resume.md`, `primary-workflow.md` — confirm they still make sense or update wording
+- [x] 3. Update `runtime-templates/claude/CLAUDE.md` — add `/myai:verify` back to commands table
+- [x] 4. Update README.md — add `/myai:verify` to slash commands table and quick start
 - [ ] 5. Propagate `.myai/commands/myai:verify.md` to `~/dev/smw`
 
 ## Notes

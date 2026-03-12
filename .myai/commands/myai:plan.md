@@ -98,6 +98,13 @@ Choose plan scope based on the task:
 - 5-15 tasks, may span sessions
 - Always links to ROADMAP phase and `must_haves` required
 
+**Parallel plan** (multiple independent features or a large task that can be split by layer):
+- Triggered by: `--parallel` flag, 3+ independent features listed, or any task with clearly separable concerns (frontend/backend/database)
+- Generates `plan.md` overview + individual `phase-XX-name.md` files per parallel group
+- Each phase file has exclusive file ownership — no file is touched by two phases
+- Includes a dependency graph and execution strategy in `plan.md`
+- `/myai:cook --parallel` will execute concurrent phases using multiple agents
+
 When in doubt, default to **task plan**. A plan for a specific feature or fix should never require the user to think about phases.
 
 ## Step 6: Create Plan Directory
@@ -118,7 +125,14 @@ SLUG="{phase-name-kebab}"           # kebab-case, max 30 chars
 mkdir -p "plans/${DATE}-phase-${N}-${SLUG}"  # e.g. plans/2026-03-12-phase-4-payments
 ```
 
-The `phase-N-` prefix makes phase plans immediately identifiable in `ls plans/`.
+**Parallel plan:**
+```bash
+DATE=$(date +%Y-%m-%d)
+SLUG="{task-name-kebab}"
+mkdir -p "plans/${DATE}-parallel-${SLUG}"  # e.g. plans/2026-03-12-parallel-auth-payments-ui
+```
+
+The `phase-N-` and `parallel-` prefixes make plan types immediately identifiable in `ls plans/`.
 
 ## Step 7: Write plan.md
 
@@ -195,6 +209,64 @@ must_haves:
 {Key design decisions, constraints, gotchas.}
 ```
 
+**For a parallel plan**, write `plans/{date}-parallel-{slug}/plan.md` as overview, then one `phase-XX-{name}.md` per parallel group:
+
+`plan.md`:
+```markdown
+---
+type: parallel
+---
+
+# Plan: {Task Name}
+
+**Date:** {date}
+**Goal:** {outcome}
+
+## Execution Strategy
+
+{Which phases run in parallel, which must be sequential}
+
+**Parallel:** Phases 1, 2, 3 → then Phase 4 (integration)
+
+## Dependency Graph
+
+| Phase | Depends on | Can run with |
+|-------|-----------|--------------|
+| Phase 1: {name} | nothing | 2, 3 |
+| Phase 2: {name} | nothing | 1, 3 |
+| Phase 3: {name} | nothing | 1, 2 |
+| Phase 4: {name} | 1, 2, 3 | — |
+
+## File Ownership Matrix
+
+| File/Directory | Owned by Phase |
+|----------------|---------------|
+| `src/components/` | Phase 1 |
+| `src/api/` | Phase 2 |
+| `src/db/` | Phase 3 |
+```
+
+`phase-01-{name}.md` (one per phase):
+```markdown
+# Phase 01: {Name}
+
+**Parallelization:** Runs concurrently with Phase 02, 03. No dependency on other phases.
+**File ownership:** `src/components/**` — no other phase touches these files.
+
+## Goal
+
+{What this phase delivers}
+
+## Tasks
+
+- [ ] 1. {task}
+- [ ] 2. {task}
+
+## Success Criteria
+
+- [ ] {observable outcome}
+```
+
 ## Step 8: Update docs/STATE.md
 
 Update the Active Plan pointer:
@@ -249,11 +321,11 @@ Ask if the user wants to adjust anything before execution.
 
 <success_criteria>
 - [ ] Active plan checked (resume or create new)
-- [ ] Scope determined: task plan or phase plan
+- [ ] Scope determined: task plan, phase plan, or parallel plan
 - [ ] Project context loaded only if relevant to scope
 - [ ] Task clarified (if ambiguous)
 - [ ] Relevant skills auto-detected and announced
-- [ ] plans/{date}-{slug}/plan.md written (lightweight for tasks, full frontmatter for phases)
+- [ ] plan files written (single plan.md for tasks/phases; plan.md + phase-XX-*.md for parallel)
 - [ ] docs/STATE.md updated with active plan path
 - [ ] User confirms plan before proceeding
 </success_criteria>
