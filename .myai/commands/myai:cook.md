@@ -217,6 +217,40 @@ When all tasks are complete:
 
 3. If gaps found: create additional tasks and continue
 
+## Step 7.5: Test + Review (MANDATORY — always run, both sequential and parallel)
+
+After all tasks pass completion check, spawn these agents sequentially:
+
+**1. Tester** — validate implementation correctness and AC coverage:
+```
+Task(
+  subagent_type="tester",
+  prompt="Run tests and validate implementation for plan: {active-plan-path}
+  Work context: {cwd}
+  Reports: {cwd}/plans/reports/
+  Focus: verify all tasks in plan.md are correctly implemented and match acceptance criteria.
+  If tests fail, report failures clearly — do NOT fix them.",
+  description="Test implementation"
+)
+```
+
+**2. Code Reviewer** — quality and correctness check:
+```
+Task(
+  subagent_type="code-reviewer",
+  prompt="Review implementation for plan: {active-plan-path}
+  Work context: {cwd}
+  Reports: {cwd}/plans/reports/
+  Focus: verify code correctness, edge cases, security, and that implementation matches plan goals.
+  Report findings clearly.",
+  description="Review implementation"
+)
+```
+
+**If tester reports failures:** fix the issues, re-run tester before proceeding.
+**If code-reviewer reports critical issues:** fix them before writing SUMMARY.md.
+**Skip only if:** `--no-test` flag is passed OR plan has `skip_qa: true` in frontmatter.
+
 ## Step 8: Write SUMMARY.md
 
 Write `{active-plan-path}/SUMMARY.md`:
@@ -314,6 +348,8 @@ return Response.json({ ok: true }) // static, not real data
 - [ ] Parallel: concurrent agents launched per dependency graph, file ownership respected
 - [ ] PROGRESS.md updated after every few tasks (sequential) or per phase (parallel)
 - [ ] must_haves verified on completion
+- [ ] tester agent spawned and all tests pass (unless --no-test)
+- [ ] code-reviewer agent spawned and critical issues resolved
 - [ ] SUMMARY.md written
 - [ ] docs/STATE.md updated (decisions, plan pointer)
 - [ ] User confirmed on completion
