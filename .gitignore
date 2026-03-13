@@ -2,3 +2,5 @@
 node_modules/
 plans/
 docs/
+PUBLISHING.md
+package-lock.json

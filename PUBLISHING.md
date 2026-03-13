@@ -2,49 +2,63 @@
 
 ## Prerequisites
 
-1. GitHub Personal Access Token with `write:packages` scope
-2. `.npmrc` configured for GitHub Packages:
-   ```
-   //npm.pkg.github.com/:_authToken=YOUR_TOKEN
-   @thinhpham:registry=https://npm.pkg.github.com/
-   ```
+1. npm account with access to `@thinhpham` scope
+2. `NPM_TOKEN` secret added to GitHub repo settings:
+   - npmjs.com → Access Tokens → Generate New Token → **Automation**
+   - GitHub repo → Settings → Secrets and variables → Actions → `NPM_TOKEN`
 3. Node.js ≥ 18, npm ≥ 8
 
-## Release Steps
+## Release Flow (tag-based CI)
 
-### 1. Update version
+### 1. Update version + changelog
 
 ```bash
-npm version patch   # 0.1.0 → 0.1.1
-npm version minor   # 0.1.0 → 0.2.0
-npm version major   # 0.1.0 → 1.0.0
+npm version patch   # 0.3.1 → 0.3.2
+npm version minor   # 0.3.1 → 0.4.0
+npm version major   # 0.3.1 → 1.0.0
 ```
 
-### 2. Run checks manually (optional)
+Update `CHANGELOG.md` with what changed.
+
+### 2. Commit, tag, and push
 
 ```bash
-npm run build:hooks          # validate hook files present
-node scripts/prepublish-check.cjs  # validate all required files
-npm test                     # run test suite
-```
-
-### 3. Publish
-
-`prepublishOnly` runs automatically before publish:
-
-```bash
-npm publish
-```
-
-This runs: `npm run build:hooks && node scripts/prepublish-check.cjs`
-
-### 4. Tag and push
-
-```bash
-git add -A
+git add package.json CHANGELOG.md
 git commit -m "chore: release v$(node -p "require('./package.json').version")"
 git tag "v$(node -p "require('./package.json').version")"
 git push && git push --tags
+```
+
+Pushing the tag triggers `.github/workflows/release.yml` which:
+1. Installs dependencies
+2. Runs tests
+3. Publishes to npm with `--access public`
+
+### 3. Verify publish
+
+```bash
+npm info @thinhpham/myai version
+```
+
+## npx Usage (after publish)
+
+```bash
+# Initialize myai in a project
+npx @thinhpham/myai@latest init
+
+# Initialize with all runtimes
+npx @thinhpham/myai@latest init --all
+
+# Install for specific runtimes
+npx @thinhpham/myai@latest install --claude --gemini
+```
+
+## Manual Publish (fallback)
+
+```bash
+npm run build:hooks
+node scripts/prepublish-check.cjs
+npm publish --access public
 ```
 
 ## What Gets Published
@@ -61,7 +75,7 @@ runtime-templates/   — CLAUDE.md, opencode.json, GEMINI.md, AGENTS.md
 scripts/postinstall.cjs
 ```
 
-**Excluded:** `.DS_Store`, `node_modules`, test files, source repos
+**Excluded:** `.DS_Store`, `node_modules`, test files
 
 ## Validation Counts
 
@@ -81,14 +95,12 @@ The prepublish check enforces:
 mkdir /tmp/test-myai && cd /tmp/test-myai
 npm init -y
 
-# Install
-npm install @thinhpham/myai
+# Install via npx
+npx @thinhpham/myai@latest init
 
-# Test init
-myai init
-myai install --claude
-ls .claude/agents/    # should show 12 agents
+# Verify
 ls .myai/commands/    # should show 8 commands
+ls .claude/agents/    # should show 12 agents (if --claude used)
 cat CLAUDE.md         # should exist
 ```
 
@@ -96,11 +108,8 @@ cat CLAUDE.md         # should exist
 
 **Auth error on publish:**
 ```bash
-npm login --registry=https://npm.pkg.github.com --scope=@thinhpham
+npm login --registry=https://registry.npmjs.org
 ```
 
-**Package not found after publish:**
-GitHub Packages may take a few minutes to propagate. Try:
-```bash
-npm install @thinhpham/myai --registry=https://npm.pkg.github.com
-```
+**Scope not found:**
+Make sure the `@thinhpham` scope exists on npmjs.com. First publish of a scoped package requires `--access public`.
