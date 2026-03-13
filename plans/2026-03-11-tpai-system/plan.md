@@ -5,14 +5,14 @@
 
 ## Overview
 
-`myai` is a personal AI workflow system — structured workflow, persistent project memory, and curated agents that work across Claude Code, OpenCode, Gemini CLI, and Codex.
+`myai` is a personal AI workflow system — structured workflow, persistent project memory, and curated agents that work across Claude Code, OpenCode, Gemini CLI, Codex, and Cursor.
 
 It unifies the best of two source systems:
 
 - **claude-code-skills** (`~/dev/claude-code-skills`) — skills, agents, hooks, rules, and CLI pattern
 - **get-shit-done** (`~/dev/get-shit-done`) — project-level workflow, verifier/roadmapper/codebase-mapper agents, session state patterns
 
-Published to GitHub Packages as `@thinhpham/myai`. Installs a `.myai/` system plus `docs/` brain layer into any target project. Supports Claude Code, OpenCode, Gemini CLI, and Codex.
+Published to GitHub Packages as `@thinhpham/myai`. Installs a `.myai/` system plus `docs/` brain layer into any target project. Supports Claude Code, OpenCode, Gemini CLI, Codex, and Cursor.
 
 **Core philosophy:** The complexity lives in the system, not the workflow. Users run slash commands. The system handles context engineering, session state, skill orchestration, and multi-runtime compatibility.
 

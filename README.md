@@ -1,6 +1,6 @@
 # myai
 
-Your personal AI workflow system for developers — structured workflow, persistent project memory, and curated agents that work across Claude Code, OpenCode, Gemini CLI, and Codex.
+Your personal AI workflow system for developers — structured workflow, persistent project memory, and curated agents that work across Claude Code, OpenCode, Gemini CLI, Codex, and Cursor.
 
 ```
 npm install -g @thinhpham/myai

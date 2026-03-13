@@ -66,10 +66,10 @@ All notable changes to this project will be documented in this file.
 ## [0.1.0] - 2026-03-11
 
 ### Added
-- Initial release — myai workflow system for Claude Code, OpenCode, Gemini CLI, and Codex
+- Initial release — myai workflow system for Claude Code, OpenCode, Gemini CLI, Codex, and Cursor
 - 13 agents: brainstormer, codebase-mapper, code-reviewer, debugger, docs-manager, fullstack-developer, git-manager, planner, researcher, roadmapper, tester, ui-ux-designer, verifier
 - 30 skills across core, frontend, backend, testing, mobile, AI, payments, and utility categories
 - 8 slash commands: `/myai:new-project`, `/myai:plan`, `/myai:cook`, `/myai:progress`, `/myai:pause`, `/myai:resume`, `/myai:validate`, `/myai:archive`
 - 5 hooks: session-init loads project state; privacy-block protects sensitive files
 - `docs/` brain layer: PROJECT.md, SPEC.md, ROADMAP.md, STATE.md
-- Multi-runtime install: `myai init`, `myai install --claude/--opencode/--gemini/--codex/--all`
+- Multi-runtime install: `myai init`, `myai install --claude/--opencode/--gemini/--codex/--cursor/--all`

@@ -1,7 +1,7 @@
 {
   "name": "@thinhpham/myai",
   "version": "0.5.3",
-  "description": "Meta-prompting, context engineering, and spec-driven development for Claude Code, OpenCode, Gemini CLI, and Codex",
+  "description": "Meta-prompting, context engineering, and spec-driven development for Claude Code, OpenCode, Gemini CLI, Codex, and Cursor",
   "type": "module",
   "bin": {
     "myai": "./bin/myai.js"
