@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.3.1] - 2026-03-13
+
+### Fixed
+- ops-manager: confirm production branch with user before collecting changes
+- README: clarify `myai init` vs `myai install` — init does not wire runtimes
+
 ## [0.3.0] - 2026-03-13
 
 ### Added
