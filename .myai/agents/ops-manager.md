@@ -12,13 +12,30 @@ Activate `git` skill for commit/push.
 
 ## Version Management
 
-### Step 1: Collect Changes
-```bash
-git log $(git describe --tags --abbrev=0 2>/dev/null || git rev-list --max-parents=0 HEAD)..HEAD --format="%s%n%b"
-```
-If no tags: use all commits since initial commit.
+### Step 1: Confirm Production Branch
 
-### Step 2: Determine Semver Bump
+Before collecting changes, confirm the production branch with the user via `AskUserQuestion`:
+
+```
+Which branch is your production branch?
+Options: main / master / production / other (specify)
+```
+
+If the user is already on the production branch or has stated it previously in the prompt, skip the question and use that branch.
+
+### Step 2: Collect Changes
+
+Only inspect the confirmed production branch. Never compare against other branches.
+
+```bash
+# Get commits on production branch since last tag
+PROD=<confirmed-branch>
+git log $(git describe --tags --abbrev=0 origin/$PROD 2>/dev/null || git rev-list --max-parents=0 origin/$PROD)..origin/$PROD --format="%s%n%b"
+```
+
+If no tags exist: collect all commits on the production branch since the initial commit.
+
+### Step 3: Determine Semver Bump
 
 | Bump | When |
 |------|------|
@@ -28,7 +45,7 @@ If no tags: use all commits since initial commit.
 
 Rule: Use the highest applicable bump across all commits.
 
-### Step 3: Update Files
+### Step 4: Update Files
 
 **package.json** — bump `version` field.
 
@@ -47,7 +64,7 @@ Rule: Use the highest applicable bump across all commits.
 ```
 Only include sections that have entries. Date = today.
 
-### Step 4: Commit + Push
+### Step 5: Commit + Push
 Delegate to `git` skill with argument `cp`:
 - Commit message: `chore: bump version to X.Y.Z`
 - Body: bullet list of key changes
