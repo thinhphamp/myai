@@ -101,3 +101,26 @@ myai archive               # journal + archive task plans (CLI)
 - No TODO/FIXME/placeholder in delivered code
 - Run compile check after every file change
 - Never commit .env files or credentials
+
+## MCP JSON Response Format
+
+When a prompt explicitly says **"Return JSON only per GEMINI.md instructions"**, respond with ONLY raw JSON in this exact structure (no markdown, no backticks, no explanations):
+
+```
+{"server":"<server-name>","tool":"<tool-name>","success":true,"result":<tool-output>,"error":null}
+```
+
+On error:
+
+```
+{"server":"<server-name>","tool":"<tool-name>","success":false,"result":null,"error":"<error-message>"}
+```
+
+**Constraints when JSON mode is requested:**
+- Single-line JSON only — no natural language, no follow-up questions
+- Maximum 500 characters
+- `server`: MCP server name, `tool`: tool called, `success`: boolean, `result`: output data, `error`: error string
+
+This output is programmatically parsed. Any deviation from the JSON format will break the integration.
+
+For all other prompts (scouting, research, general tasks), respond normally in natural language.
