@@ -3,7 +3,7 @@
 Your personal AI workflow system for developers — structured workflow, persistent project memory, and curated agents that work across Claude Code, OpenCode, Gemini CLI, Codex, and Cursor.
 
 ```
-npm install -g @thinhpham/myai
+npx @thinhpham/myai init
 ```
 
 ## What It Is
@@ -23,23 +23,20 @@ It installs a structured workflow system into any project:
 ## Quick Start
 
 ```bash
-# 1. Install globally
-npm install -g @thinhpham/myai
-
-# 2. Initialize a project
+# 1. Initialize a project
 cd your-project
-myai init              # installs .myai/ system, docs/ brain layer, plans/templates/
+npx @thinhpham/myai init              # installs .myai/ system, docs/ brain layer, plans/templates/
 
-# 3. Wire your runtime (pick one or combine with init)
-myai install --claude   # Claude Code: copies agents/skills/hooks into .claude/, creates CLAUDE.md
-myai install --opencode # OpenCode: copies system into .opencode/
-myai install --gemini   # Gemini CLI: creates GEMINI.md
-myai install --codex    # Codex: creates AGENTS.md
-myai install --cursor   # Cursor: creates .cursor/rules/main.mdc
-myai install --all      # all five runtimes at once
+# 2. Wire your runtime (pick one or combine with init)
+npx @thinhpham/myai install --claude   # Claude Code: copies agents/skills/hooks into .claude/, creates CLAUDE.md
+npx @thinhpham/myai install --opencode # OpenCode: copies system into .opencode/
+npx @thinhpham/myai install --gemini   # Gemini CLI: creates GEMINI.md
+npx @thinhpham/myai install --codex    # Codex: creates AGENTS.md
+npx @thinhpham/myai install --cursor   # Cursor: creates .cursor/rules/main.mdc
+npx @thinhpham/myai install --all      # all five runtimes at once
 
 # Shortcut: init + install in one step
-myai init --claude
+npx @thinhpham/myai init --claude
 
 # 4. Open Claude Code — session-init hook loads your project state automatically
 
@@ -60,19 +57,19 @@ myai init --claude
 
 | Command | Description |
 |---------|-------------|
-| `myai init` | Install `.myai/` system + `docs/` brain layer + `plans/templates/` into current project. Does not wire any runtime — run `myai install` after. |
-| `myai init --claude` | Init + install for Claude Code in one step |
-| `myai init --all` | Init + install for all runtimes in one step |
-| `myai install --claude` | Copy agents/skills/commands/hooks into `.claude/`, merge hooks into `settings.json`, create `CLAUDE.md` |
-| `myai install --opencode` | Copy system into `.opencode/`, create `opencode.json` |
-| `myai install --gemini` | Create `GEMINI.md` in project root (or `~/.gemini/GEMINI.md` with `--global`) |
-| `myai install --codex` | Create `AGENTS.md` in project root (or `~/.codex/AGENTS.md` with `--global`) |
-| `myai install --cursor` | Create `.cursor/rules/main.mdc` in project root (project-scoped only) |
-| `myai install --all` | Install for all five runtimes |
-| `myai install --global` | Install to user-level config dirs instead of project dir |
-| `myai update` | Interactive merge of latest system files |
-| `myai validate [phase]` | Print a plan phase to validate it matches requirements (defaults to latest plan) |
-| `myai validate [phase] --plan <name>` | Validate a phase from a specific plan folder |
+| `npx @thinhpham/myai init` | Install `.myai/` system + `docs/` brain layer + `plans/templates/` into current project. Does not wire any runtime — run `install` after. |
+| `npx @thinhpham/myai init --claude` | Init + install for Claude Code in one step |
+| `npx @thinhpham/myai init --all` | Init + install for all runtimes in one step |
+| `npx @thinhpham/myai install --claude` | Copy agents/skills/commands/hooks into `.claude/`, merge hooks into `settings.json`, create `CLAUDE.md` |
+| `npx @thinhpham/myai install --opencode` | Copy system into `.opencode/`, create `opencode.json` |
+| `npx @thinhpham/myai install --gemini` | Create `GEMINI.md` in project root (or `~/.gemini/GEMINI.md` with `--global`) |
+| `npx @thinhpham/myai install --codex` | Create `AGENTS.md` in project root (or `~/.codex/AGENTS.md` with `--global`) |
+| `npx @thinhpham/myai install --cursor` | Create `.cursor/rules/main.mdc` in project root (project-scoped only) |
+| `npx @thinhpham/myai install --all` | Install for all five runtimes |
+| `npx @thinhpham/myai install --global` | Install to user-level config dirs instead of project dir |
+| `npx @thinhpham/myai update` | Interactive merge of latest system files |
+| `npx @thinhpham/myai validate [phase]` | Print a plan phase to validate it matches requirements (defaults to latest plan) |
+| `npx @thinhpham/myai validate [phase] --plan <name>` | Validate a phase from a specific plan folder |
 
 ## Slash Commands (in Claude Code)
 
@@ -91,7 +88,7 @@ myai init --claude
 
 ## Project Structure
 
-After `myai init`:
+After `npx @thinhpham/myai init`:
 
 ```
 your-project/
