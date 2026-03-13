@@ -6,7 +6,7 @@ on:
       - 'v*.*.*'
 
 permissions:
-  contents: read
+  contents: write
   id-token: write
 
 jobs:
@@ -32,3 +32,16 @@ jobs:
 
       - name: Publish to npm
         run: npm publish --access public --provenance
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Create GitHub Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          VERSION=${GITHUB_REF_NAME}
+          # Extract changelog notes for this version
+          NOTES=$(awk "/^## \[${VERSION#v}\]/{flag=1; next} /^## \[/{flag=0} flag" CHANGELOG.md | sed '/^$/d' | head -20)
+          gh release create "$VERSION" \
+            --title "$VERSION" \
+            --notes "${NOTES:-Release $VERSION}"
