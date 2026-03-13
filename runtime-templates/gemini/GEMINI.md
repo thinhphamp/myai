@@ -58,6 +58,7 @@ Specialized agents available for delegation:
 - `codebase-mapper` — maps and documents existing codebase structure
 - `roadmapper` — defines and updates ROADMAP phases
 - `verifier` — goal-backward phase verification after build
+- `ops-manager` — manages versioning, changelog, and releases
 
 ## Plan Validation & Lifecycle
 

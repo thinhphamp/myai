@@ -14,7 +14,7 @@ It installs a structured workflow system into any project:
 
 - **Persistent memory** — `docs/` brain layer (PROJECT.md, SPEC.md, ROADMAP.md, STATE.md) injected into every session automatically
 - **Structured workflow** — brainstorm → plan → validate → build → archive, not just "chat and hope"
-- **13 agents** — brainstormer, planner, researcher, fullstack-developer, code-reviewer, tester, debugger, and more
+- **14 agents** — brainstormer, planner, researcher, fullstack-developer, code-reviewer, tester, debugger, ops-manager, and more
 - **30 skills** — domain expertise for React, Next.js, NestJS, databases, auth, payments, mobile, AI, and more
 - **8 slash commands** — project lifecycle from first idea to shipping
 - **5 hooks** — session-init loads your project state; privacy-block protects sensitive files
