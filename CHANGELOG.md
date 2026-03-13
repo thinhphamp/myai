@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.5.0] - 2026-03-13
+
+### Added
+- Cursor runtime support — `myai install --cursor` creates `.cursor/rules/main.mdc` with `alwaysApply: true`
+- `--cursor` flag added to `myai init` and `myai install` commands
+- `--all` now installs all 5 runtimes (claude, opencode, gemini, codex, cursor)
+
 ## [0.4.0] - 2026-03-13
 
 ### Changed
