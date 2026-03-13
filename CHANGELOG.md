@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.6.0] - 2026-03-13
+
+### Added
+- On-demand docs read rules added to all runtime templates (CLAUDE.md, GEMINI.md, AGENTS.md, Cursor rules)
+- On-demand read table in Documentation section — models now know when to read each doc by task type
+- Subagent instructions: pass relevant docs in Task tool prompts based on task type
+- Full `docs/` brain tree documented in all runtime templates with `(auto-injected)` / `(on-demand)` labels
+
 ## [0.5.4] - 2026-03-13
 
 ### Changed
