@@ -52,9 +52,22 @@ If PROGRESS.md exists, resume from the last checkpoint (skip completed tasks).
 
 ```bash
 cat docs/ROADMAP.md 2>/dev/null | head -80
+cat docs/code-standards.md 2>/dev/null        # always — follow conventions when writing code
 ```
 
-Understand the phase goal to stay aligned during execution.
+Load additional docs based on what the plan involves:
+```bash
+# For API, backend, database, service-level tasks:
+cat docs/system-architecture.md 2>/dev/null
+
+# For UI, component, styling tasks:
+cat docs/design-guidelines.md 2>/dev/null
+
+# For deploy, CI/CD, infra tasks:
+cat docs/deployment-guide.md 2>/dev/null
+```
+
+Understand the phase goal and existing conventions before writing any code.
 
 ## Step 3: Auto-Activate Skills
 
@@ -158,7 +171,7 @@ For each uncompleted task in the plan:
 
 **Execution principles:**
 - Write working code, not placeholders
-- Follow existing patterns (check CONVENTIONS.md if available in plans/codebase/)
+- Follow existing patterns (from docs/code-standards.md loaded in Step 2)
 - Wire components to APIs to databases — don't leave orphaned code
 - Handle errors at system boundaries
 - After each task: verify it compiles/passes basic checks

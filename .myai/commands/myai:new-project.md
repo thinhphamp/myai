@@ -48,14 +48,15 @@ Check if this is an existing project with code:
 ls package.json requirements.txt Cargo.toml go.mod pyproject.toml src/ app/ lib/ 2>/dev/null | head -5
 ```
 
-If any of these exist, this is an **existing project**. Spawn 4 parallel codebase-mapper agents before gathering context:
+If any of these exist, this is an **existing project**. Spawn 4 parallel general-purpose agents before gathering context:
 
 ```
-Spawn 4 agents in parallel using the Task tool:
-  1. codebase-mapper — focus: tech    (writes STACK.md, INTEGRATIONS.md)
-  2. codebase-mapper — focus: arch    (writes ARCHITECTURE.md, STRUCTURE.md)
-  3. codebase-mapper — focus: quality (writes CONVENTIONS.md, TESTING.md)
-  4. codebase-mapper — focus: concerns (writes CONCERNS.md)
+Spawn 4 general-purpose agents in parallel using the Task tool (mkdir -p plans/codebase first):
+  1. focus: tech    → analyze tech stack & integrations, write plans/codebase/STACK.md + INTEGRATIONS.md
+  2. focus: arch    → analyze architecture & structure, write plans/codebase/ARCHITECTURE.md + STRUCTURE.md
+  3. focus: quality → analyze conventions & testing, write plans/codebase/CONVENTIONS.md + TESTING.md
+  4. focus: concerns → identify tech debt & issues, write plans/codebase/CONCERNS.md
+Each agent: always include file paths with backticks, use Write tool to create files.
 ```
 
 Wait for all 4 to complete, then read the written documents from `plans/codebase/` to pre-fill the context questions in Step 2. Only ask the user for information that couldn't be inferred from the codebase.
@@ -269,7 +270,7 @@ Present summary to user:
 </process>
 
 <success_criteria>
-- [ ] Existing codebase detected and mapped (if applicable) — 4 agents run in parallel
+- [ ] Existing codebase detected and analyzed (if applicable) — 4 agents run in parallel
 - [ ] docs/ directory created
 - [ ] docs/PROJECT.md written with tech stack and goals (pre-filled from STACK.md where available)
 - [ ] docs/SPEC.md written with categorized v1 requirements + IDs

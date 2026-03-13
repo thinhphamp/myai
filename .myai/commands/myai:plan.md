@@ -42,12 +42,24 @@ Read project docs to inform the plan:
 ```bash
 cat docs/ROADMAP.md 2>/dev/null
 cat docs/SPEC.md 2>/dev/null | head -60
+cat docs/codebase-summary.md 2>/dev/null      # understand existing codebase before planning
+cat docs/code-standards.md 2>/dev/null        # know conventions before designing tasks
+```
+
+Load additional docs based on what the task involves:
+```bash
+# For API, backend, database, service-level tasks:
+cat docs/system-architecture.md 2>/dev/null
+
+# For UI, component, styling tasks:
+cat docs/design-guidelines.md 2>/dev/null
 ```
 
 Extract:
 - Current phase goal and success criteria
 - Relevant requirements for this task
 - Key decisions already made
+- Existing patterns and constraints to follow
 
 ## Step 3: Clarify Task (if needed)
 

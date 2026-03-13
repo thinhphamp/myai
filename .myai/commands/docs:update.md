@@ -1,6 +1,6 @@
 ---
 name: docs:update
-description: Update docs/ files based on recent codebase changes — runs targeted codebase-mapper agents then syncs affected docs
+description: Update docs/ files based on recent codebase changes — runs targeted general-purpose analysis agents then syncs affected docs
 argument-hint: "[scope: all | code-standards | system-architecture | design-guidelines | deployment-guide | codebase-summary]"
 allowed-tools:
   - Read
@@ -26,7 +26,7 @@ Otherwise, detect changed areas from git:
 git diff HEAD~5 --name-only 2>/dev/null || git diff --name-only
 ```
 
-Map changed paths to codebase-mapper focus areas:
+Map changed paths to general-purpose analysis focus areas:
 | Changed paths | Focus areas to re-run |
 |--------------|----------------------|
 | src/, lib/, app/ (logic files) | quality, arch |
@@ -37,7 +37,7 @@ Map changed paths to codebase-mapper focus areas:
 
 ## Step 2: Run Targeted Codebase Mappers
 
-Spawn only the needed codebase-mapper agents in parallel. Pass existing `plans/codebase/` files as context so agents update rather than rebuild from scratch.
+Spawn only the needed general-purpose analysis agents in parallel. Pass existing `plans/codebase/` files as context so agents update rather than rebuild from scratch.
 
 ## Step 3: Delegate to docs-manager
 
@@ -66,7 +66,7 @@ docs-manager reads existing docs and applies targeted updates — does NOT regen
 
 <success_criteria>
 - [ ] Changed areas detected (git diff or explicit scope)
-- [ ] Only necessary codebase-mapper agents re-run
+- [ ] Only necessary general-purpose analysis agents re-run
 - [ ] docs-manager updated only affected docs
 - [ ] No regressions in unchanged doc sections
 </success_criteria>

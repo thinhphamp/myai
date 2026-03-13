@@ -12,7 +12,7 @@ allowed-tools:
 ---
 
 <objective>
-Generate the full docs/ brain layer by analyzing the codebase. Runs repomix + 4 parallel codebase-mapper agents, then delegates to docs-manager to synthesize results into all deeper doc files. Repomix provides full file-level detail; codebase-mappers provide structured analysis.
+Generate the full docs/ brain layer by analyzing the codebase. Runs repomix + 4 parallel analysis agents, then delegates to docs-manager to synthesize results into all deeper doc files. Repomix provides full file-level detail; analysis agents provide structured analysis.
 </objective>
 
 <process>
@@ -42,15 +42,35 @@ Run repomix to pack the full codebase:
 npx repomix --output repomix-output.xml 2>/dev/null || repomix --output repomix-output.xml
 ```
 
-## Step 3: Run Codebase Mappers (parallel)
+## Step 3: Run Codebase Analysis (parallel)
 
-Spawn 4 codebase-mapper agents in parallel via Task tool:
+Ensure output directory exists:
+```bash
+mkdir -p plans/codebase
+```
+
+Spawn 4 general-purpose agents in parallel via Task tool:
 
 ```
-Agent 1: codebase-mapper — focus: tech     → writes plans/codebase/STACK.md, INTEGRATIONS.md
-Agent 2: codebase-mapper — focus: arch     → writes plans/codebase/ARCHITECTURE.md, STRUCTURE.md
-Agent 3: codebase-mapper — focus: quality  → writes plans/codebase/CONVENTIONS.md, TESTING.md
-Agent 4: codebase-mapper — focus: concerns → writes plans/codebase/CONCERNS.md
+Agent 1 — focus: tech
+  Analyze the technology stack and external integrations.
+  Write plans/codebase/STACK.md (languages, frameworks, key deps, runtime, package manager, config) and plans/codebase/INTEGRATIONS.md (APIs, databases, auth, monitoring, CI/CD, env vars).
+  Always include file paths with backticks. Use the Write tool to create files.
+
+Agent 2 — focus: arch
+  Analyze architecture and file structure.
+  Write plans/codebase/ARCHITECTURE.md (pattern, layers, data flow, entry points, error handling) and plans/codebase/STRUCTURE.md (directory layout, key file locations, naming conventions, where to add new code).
+  Always include file paths with backticks. Use the Write tool to create files.
+
+Agent 3 — focus: quality
+  Analyze coding conventions and testing patterns.
+  Write plans/codebase/CONVENTIONS.md (naming, code style, imports, error handling, comments, module design) and plans/codebase/TESTING.md (framework, file organization, structure, mocking, coverage, common patterns).
+  Always include file paths with backticks. Use the Write tool to create files.
+
+Agent 4 — focus: concerns
+  Identify technical debt, known bugs, security risks, performance bottlenecks, fragile areas, missing coverage.
+  Write plans/codebase/CONCERNS.md.
+  Always include file paths with backticks. Use the Write tool to create files.
 ```
 
 Wait for all 4 to complete.
@@ -84,7 +104,7 @@ Pass:
 
 <success_criteria>
 - [ ] repomix-output.xml generated
-- [ ] 4 codebase-mapper agents completed
+- [ ] 4 analysis agents completed
 - [ ] docs-manager synthesized both sources into docs/ files
 - [ ] All generated docs contain real code examples and exact file paths (not invented)
 </success_criteria>
