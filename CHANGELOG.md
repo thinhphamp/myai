@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.5.4] - 2026-03-13
+
+### Changed
+- Update all docs and runtime templates to reflect Cursor as a supported runtime
+- Untrack docs/, PUBLISHING.md, package-lock.json from git
+
 ## [0.5.3] - 2026-03-13
 
 ### Fixed
