@@ -43,4 +43,5 @@ jobs:
           NOTES=$(awk "/^## \[${VERSION#v}\]/{flag=1; next} /^## \[/{flag=0} flag" CHANGELOG.md | sed '/^$/d' | head -20)
           gh release create "$VERSION" \
             --title "$VERSION" \
-            --notes "${NOTES:-Release $VERSION}"
+            --notes "${NOTES:-Release $VERSION}" \
+            --clobber
