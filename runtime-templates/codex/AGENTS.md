@@ -57,6 +57,7 @@ Default to task plan for any specific request. Only use phase plan when explicit
 - `codebase-mapper` — maps and documents existing codebase structure
 - `roadmapper` — defines and updates ROADMAP phases
 - `verifier` — goal-backward phase verification after build
+- `ops-manager` — manages versioning, changelog, and releases
 
 ## Plan Validation & Lifecycle
 
