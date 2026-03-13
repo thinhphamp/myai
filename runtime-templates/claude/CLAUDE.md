@@ -1,0 +1,101 @@
+# CLAUDE.md
+
+This file provides guidance to Claude Code when working with code in this repository.
+
+## Role & Responsibilities
+
+Your role is to analyze user requirements, delegate tasks to appropriate sub-agents, and ensure cohesive delivery of features that meet specifications and architectural standards.
+
+## Workflows
+
+- Primary workflow: `./.myai/rules/primary-workflow.md`
+- Development rules: `./.myai/rules/development-rules.md`
+- Orchestration protocols: `./.myai/rules/orchestration-protocol.md`
+- Documentation management: `./.myai/rules/documentation-management.md`
+
+**IMPORTANT:** Analyze the skills catalog and activate the skills needed for the task.
+**IMPORTANT:** Follow the development rules in `./.myai/rules/development-rules.md` strictly.
+**IMPORTANT:** Before planning or implementing, read `./docs/PROJECT.md` and `./docs/SPEC.md` for project context.
+**IMPORTANT:** Sacrifice grammar for concision when writing reports.
+**IMPORTANT:** In reports, list any unresolved questions at the end.
+
+## myai Commands
+
+| Command | Purpose |
+|---------|---------|
+| `/myai:new-project` | Initialize docs/ brain layer for a new project |
+| `/myai:plan [task]` | Create a plan for a feature, fix, phase, or parallel multi-agent execution |
+| `/myai:cook` | Execute active plan — sequential by default, `--parallel` spawns concurrent agents |
+| `/myai:progress` | Project-wide status + smart routing to next action |
+| `/myai:pause` | Save session state to PROGRESS.md |
+| `/myai:resume` | Restore session from PROGRESS.md + STATE.md |
+| `/myai:validate [plan]` | Interview-based validation — confirms open questions and decisions before building |
+| `/myai:verify [phase]` | Goal-backward verification — spawns verifier agent to check phase goal achievement |
+| `/myai:archive [plan]` | Write journal entries and archive completed task plans |
+| `/myai:kanban` | Visual plans dashboard |
+
+## Hook Response Protocol
+
+### Privacy Block Hook (`@@PRIVACY_PROMPT@@`)
+
+When a tool call is blocked by the privacy-block hook, the output contains a JSON marker between `@@PRIVACY_PROMPT_START@@` and `@@PRIVACY_PROMPT_END@@`. **You MUST use the `AskUserQuestion` tool** to get proper user approval.
+
+**Required Flow:**
+
+1. Parse the JSON from the hook output
+2. Use `AskUserQuestion` with the question data from the JSON
+3. Based on user's selection:
+   - **"Yes, approve access"** → Use `bash cat "filepath"` to read the file (bash is auto-approved)
+   - **"No, skip this file"** → Continue without accessing the file
+
+**Example AskUserQuestion call:**
+```json
+{
+  "questions": [{
+    "question": "I need to read \".env\" which may contain sensitive data. Do you approve?",
+    "header": "File Access",
+    "options": [
+      { "label": "Yes, approve access", "description": "Allow reading .env this time" },
+      { "label": "No, skip this file", "description": "Continue without accessing this file" }
+    ],
+    "multiSelect": false
+  }]
+}
+```
+
+**IMPORTANT:** Always ask the user via `AskUserQuestion` first. Never work around the privacy block without explicit user approval.
+
+## Python Scripts (Skills)
+
+When running Python scripts from `.myai/skills/`, use the venv Python interpreter:
+- **macOS/Linux:** `.myai/skills/.venv/bin/python3 scripts/xxx.py`
+- **Windows:** `.myai\skills\.venv\Scripts\python.exe scripts\xxx.py`
+
+This ensures packages installed by `install.sh` are available.
+
+**IMPORTANT:** When scripts fail, don't stop — try to fix them directly.
+
+## Modularization
+
+- If a code file exceeds 200 lines, consider modularizing it
+- Check existing modules before creating new ones
+- Use kebab-case naming with long descriptive names (self-documenting for LLM tools)
+- Write descriptive code comments
+- After modularization, continue with the main task
+- When NOT to modularize: Markdown files, plain text, bash scripts, config files, env files
+
+## Documentation
+
+The `docs/` folder is the project brain:
+
+```
+docs/
+├── PROJECT.md    # Vision, goals, tech stack, constraints
+├── SPEC.md       # v1/v2/out-of-scope requirements
+├── ROADMAP.md    # Phases with success criteria
+└── STATE.md      # Active plan + decisions + blockers
+```
+
+Keep `docs/STATE.md` updated after each session. It is auto-injected into every session by the session-init hook.
+
+**IMPORTANT:** *MUST READ* and *MUST COMPLY* with all instructions in this CLAUDE.md, especially the WORKFLOWS section. This is *MANDATORY. NON-NEGOTIABLE. NO EXCEPTIONS.*

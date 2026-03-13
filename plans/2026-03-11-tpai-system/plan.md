@@ -1,77 +1,80 @@
-# plan.md — tpai CLI Tool
+# plan.md — myai CLI Tool
 
 **Date:** 2026-03-11
-**Status:** In Progress
+**Status:** Complete
 
 ## Overview
 
-`tpai` is a meta-prompting, context engineering, and spec-driven development CLI tool that unifies the best of two source systems:
+`myai` is a personal AI workflow system — structured workflow, persistent project memory, and curated agents that work across Claude Code, OpenCode, Gemini CLI, and Codex.
+
+It unifies the best of two source systems:
 
 - **claude-code-skills** (`~/dev/claude-code-skills`) — skills, agents, hooks, rules, and CLI pattern
 - **get-shit-done** (`~/dev/get-shit-done`) — project-level workflow, verifier/roadmapper/codebase-mapper agents, session state patterns
 
-Published to GitHub Packages as `@thinhpham/tpai`. Installs a `.tpai/` system plus `docs/` brain layer into any target project. Supports Claude Code, OpenCode, Gemini CLI, and Codex.
+Published to GitHub Packages as `@thinhpham/myai`. Installs a `.myai/` system plus `docs/` brain layer into any target project. Supports Claude Code, OpenCode, Gemini CLI, and Codex.
 
-**Core philosophy:** The complexity lives in the system, not the workflow. Users run 8 slash commands. The system handles context engineering, session state, skill orchestration, and multi-runtime compatibility.
+**Core philosophy:** The complexity lives in the system, not the workflow. Users run slash commands. The system handles context engineering, session state, skill orchestration, and multi-runtime compatibility.
 
 ---
 
 ## Complete File Structure
 
 ```
-tpai/
-├── package.json                         ← ESM, commander, name: @thinhpham/tpai
+myai/
+├── package.json                         ← ESM, commander, name: @thinhpham/myai
 ├── .npmrc                               ← GitHub Packages registry
 ├── README.md
-├── CHANGELOG.md
 ├── PUBLISHING.md
 ├── commitlint.config.cjs
 ├── vitest.config.js
 │
 ├── bin/
-│   └── tpai.js                          ← CLI entry point
+│   └── myai.js                          ← CLI entry point
 │
 ├── lib/
 │   ├── commands/
-│   │   ├── init.js                      ← copies .tpai/ + docs/ templates to project
-│   │   ├── update.js                    ← interactive merge
-│   │   └── install.js                   ← multi-runtime installer
+│   │   ├── init.js                      ← copies .myai/ + docs/ templates to project
+│   │   ├── update.js                    ← interactive merge + runtime propagation
+│   │   ├── install.js                   ← multi-runtime installer
+│   │   ├── validate.js                  ← print plan phases for review
+│   │   └── discuss.js                   ← (removed, renamed to validate)
 │   └── utils/
-│       ├── logger.js                    ← chalk-based (copy from CCS)
-│       ├── file-operations.js           ← copyDirRecursive, deepMergeJson (copy from CCS)
-│       ├── diff-utils.js                ← getFileDiff (copy from CCS)
-│       ├── prompt-helpers.js            ← conflict resolution (copy from CCS)
-│       └── version-checker.js           ← compareVersions (copy from CCS)
+│       ├── logger.js                    ← chalk-based
+│       ├── file-operations.js           ← copyDirRecursive, deepMergeJson
+│       ├── diff-utils.js                ← getFileDiff
+│       ├── prompt-helpers.js            ← conflict resolution
+│       └── version-checker.js           ← compareVersions
 │
 ├── scripts/
-│   ├── postinstall.cjs                  ← auto-copy on npm install (adapt from CCS)
+│   ├── postinstall.cjs                  ← auto-copy on npm install
 │   ├── prepublish-check.cjs             ← pre-publish validation
-│   └── build-hooks.js                   ← bundle hooks with esbuild (adapt from GSD)
+│   └── build-hooks.js                   ← bundle hooks with esbuild
 │
-├── .tpai/                               ← the system installed into target projects
+├── .myai/                               ← the system installed into target projects
 │   ├── settings.json                    ← hooks config
 │   ├── hooks/
-│   │   ├── session-init.cjs             ← loads STATE.md + active PROGRESS.md (adapt from CCS)
-│   │   ├── dev-rules-reminder.cjs       ← (copy from CCS)
-│   │   ├── privacy-block.cjs            ← (copy from CCS)
-│   │   ├── post-edit-simplify-reminder.cjs  ← (copy from CCS)
-│   │   ├── usage-context-awareness.cjs  ← (copy from CCS)
-│   │   └── lib/                         ← shared hook utilities (copy from CCS)
-│   ├── agents/                          ← 12 agent .md files
-│   ├── commands/                        ← 8 slash commands
-│   ├── skills/                          ← 29 curated skills
+│   │   ├── session-init.cjs             ← loads STATE.md + active PROGRESS.md
+│   │   ├── dev-rules-reminder.cjs
+│   │   ├── privacy-block.cjs
+│   │   ├── post-edit-simplify-reminder.cjs
+│   │   ├── usage-context-awareness.cjs
+│   │   └── lib/                         ← shared hook utilities
+│   ├── agents/                          ← 13 agent .md files
+│   ├── commands/                        ← 9 slash commands
+│   ├── skills/                          ← 30 curated skills
 │   └── rules/                           ← 4 rule files
 │
-├── docs-templates/                      ← installed by tp:new-project
+├── docs-templates/                      ← installed by myai:new-project
 │   ├── PROJECT.md
-│   ├── SPEC.md                          ← NEW: v1/v2/out-of-scope
+│   ├── SPEC.md
 │   ├── ROADMAP.md
 │   └── STATE.md
 │
 ├── plans-templates/
 │   ├── plan.md
 │   ├── phase-template.md
-│   └── PROGRESS.md                      ← NEW: session state per plan
+│   └── PROGRESS.md
 │
 ├── runtime-templates/
 │   ├── claude/CLAUDE.md
@@ -90,202 +93,150 @@ tpai/
 ## Phases
 
 ### Phase 1: CLI Scaffold
-**Goal:** Working `tpai` binary with `init`, `update`, `install` commands registered as stubs.
-**Status:** [ ] Pending
+**Goal:** Working `myai` binary with `init`, `update`, `install` commands registered as stubs.
+**Status:** [x] Complete
 
 Tasks:
-- [ ] Create `package.json` (ESM, Commander.js, inquirer, chalk, vitest)
-- [ ] Create `.npmrc` for GitHub Packages
-- [ ] Create `bin/tpai.js` (adapt from CCS `bin/gkim-claude.js`)
-- [ ] Copy `lib/utils/` from CCS verbatim (logger, file-operations, diff-utils, prompt-helpers, version-checker)
-- [ ] Create `lib/commands/init.js`, `update.js`, `install.js` as stubs
-- [ ] Create `commitlint.config.cjs`, `vitest.config.js`
-- [ ] Verify `node bin/tpai.js --help` works
-
-**Copy from:** `CCS/bin/gkim-claude.js`, `CCS/lib/utils/*`
+- [x] Create `package.json` (ESM, Commander.js, inquirer, chalk, vitest)
+- [x] Create `.npmrc` for GitHub Packages
+- [x] Create `bin/myai.js`
+- [x] Copy `lib/utils/` from CCS verbatim (logger, file-operations, diff-utils, prompt-helpers, version-checker)
+- [x] Create `lib/commands/init.js`, `update.js`, `install.js`
+- [x] Create `commitlint.config.cjs`, `vitest.config.js`
+- [x] Verify `node bin/myai.js --help` works
 
 ---
 
 ### Phase 2: Docs Brain Layer
-**Goal:** `tpai init` installs `.tpai/` skeleton and `docs/` brain layer.
-**Status:** [ ] Pending
+**Goal:** `myai init` installs `.myai/` skeleton and `docs/` brain layer.
+**Status:** [x] Complete
 **Depends on:** Phase 1
 
 Tasks:
-- [ ] Create `docs-templates/PROJECT.md` (adapt from GSD, strip XML wrappers)
-- [ ] Create `docs-templates/SPEC.md` (NEW — v1/v2/out-of-scope structure)
-- [ ] Create `docs-templates/ROADMAP.md` (adapt from GSD)
-- [ ] Create `docs-templates/STATE.md` (adapt from GSD, strip velocity metrics, add Active Plan pointer)
-- [ ] Create `plans-templates/PROGRESS.md` (NEW — session state per plan)
-- [ ] Create `plans-templates/plan.md` (adapt from CCS feature template)
-- [ ] Create `plans-templates/phase-template.md` (adapt from CCS)
-- [ ] Implement `lib/commands/init.js` (adapt from CCS, add docs/ install, remove GitHub App auth)
-
-**Copy from:** `CCS/lib/commands/init.js`, `GSD/templates/*`, `CCS/plans/templates/*`
+- [x] Create `docs-templates/PROJECT.md`
+- [x] Create `docs-templates/SPEC.md`
+- [x] Create `docs-templates/ROADMAP.md`
+- [x] Create `docs-templates/STATE.md`
+- [x] Create `plans-templates/PROGRESS.md`
+- [x] Create `plans-templates/plan.md`
+- [x] Create `plans-templates/phase-template.md`
+- [x] Implement `lib/commands/init.js`
 
 ---
 
 ### Phase 3: Hook System
 **Goal:** 5 hooks compiled and wired into `settings.json`. `session-init` loads STATE.md + PROGRESS.md.
-**Status:** [ ] Pending
+**Status:** [x] Complete
 **Depends on:** Phase 1
 
 Tasks:
-- [ ] Copy `hooks/lib/*.cjs` verbatim from CCS
-- [ ] Copy 4 hooks verbatim: `dev-rules-reminder`, `privacy-block`, `post-edit-simplify-reminder`, `usage-context-awareness`
-- [ ] Write `session-init.cjs` (adapt from CCS — add STATE.md + PROGRESS.md injection, remove cleanupOrphanedShadowedSkills)
-- [ ] Create `.tpai/settings.json` (adapt from CCS, update paths `.claude/` → `.tpai/`)
-- [ ] Create `scripts/build-hooks.js` (adapt from GSD)
+- [x] Copy `hooks/lib/*.cjs` verbatim from CCS
+- [x] Copy 4 hooks verbatim: `dev-rules-reminder`, `privacy-block`, `post-edit-simplify-reminder`, `usage-context-awareness`
+- [x] Write `session-init.cjs`
+- [x] Create `.myai/settings.json`
+- [x] Create `scripts/build-hooks.js`
 
-**Key decision:** No `gsd-tools.cjs` binary. session-init reads STATE.md + PROGRESS.md directly.
+**Key decision:** No binary. session-init reads STATE.md + PROGRESS.md directly.
 
 ---
 
 ### Phase 4: Skills Curation
-**Goal:** 29 curated skills in `.tpai/skills/`. All direct copies from CCS.
-**Status:** [ ] Pending
+**Goal:** 30 curated skills in `.myai/skills/`. All direct copies from CCS.
+**Status:** [x] Complete
 **Depends on:** Phase 1
 
 Tasks:
-- [ ] Copy 10 core skills: planning, cook, research, sequential-thinking, context-engineering, debug, fix, scout, code-review, mcp-management
-- [ ] Copy 14 domain skills: frontend-development, web-frameworks, react-best-practices, ui-styling, frontend-design, backend-development, databases, better-auth, devops, web-testing, payment-integration, mobile-development, ai-multimodal, mcp-builder
-- [ ] Copy 5 utility skills: docs-seeker, git, repomix, plans-kanban, mermaidjs-v11, brainstorm
-
-**Note:** Exclude common/ (CCS-internal). Skills referencing Python scripts: include scripts, user sets up venv manually.
+- [x] Copy core skills: planning, cook, research, sequential-thinking, context-engineering, debug, fix, scout, code-review, mcp-management
+- [x] Copy domain skills: frontend-development, web-frameworks, react-best-practices, ui-styling, frontend-design, backend-development, databases, better-auth, devops, web-testing, payment-integration, mobile-development, ai-multimodal, mcp-builder
+- [x] Copy utility skills: docs-seeker, git, repomix, plans-kanban, mermaidjs-v11, brainstorm
 
 ---
 
 ### Phase 5: Agents
-**Goal:** 12 agents in `.tpai/agents/`. 9 copied from CCS, 3 adapted from GSD.
-**Status:** [ ] Pending
+**Goal:** 13 agents in `.myai/agents/`.
+**Status:** [x] Complete
 **Depends on:** Phase 4
 
 Tasks:
-- [ ] Copy 9 agents from CCS: planner, researcher, fullstack-developer, code-reviewer, tester, debugger, git-manager, docs-manager, ui-ux-designer
-- [ ] Adapt `gsd-verifier.md` → `verifier.md` (update paths `.planning/` → `plans/`, remove gsd-tools calls)
-- [ ] Adapt `gsd-roadmapper.md` → `roadmapper.md` (update spawning context, output to docs/SPEC.md + docs/ROADMAP.md)
-- [ ] Adapt `gsd-codebase-mapper.md` → `codebase-mapper.md` (update paths, remove gsd-tools)
+- [x] Copy 9 agents from CCS: planner, researcher, fullstack-developer, code-reviewer, tester, debugger, git-manager, docs-manager, ui-ux-designer
+- [x] Adapt verifier, roadmapper, codebase-mapper from GSD
+- [x] Add brainstormer agent (ported from CCS brainstormer)
 
 ---
 
-### Phase 6: Slash Commands (8 Total)
-**Goal:** 8 slash commands in `.tpai/commands/`.
-**Status:** [ ] Pending
+### Phase 6: Slash Commands
+**Goal:** 9 slash commands in `.myai/commands/`.
+**Status:** [x] Complete
 **Depends on:** Phase 4, Phase 5
 
 Commands:
-- [ ] `tp-new-project.md` — creates docs/ brain layer (adapt from GSD new-project.md + CCS bootstrap.md)
-- [ ] `tp-plan.md` — planning with project context + skill auto-detection (adapt from CCS plan.md)
-- [ ] `tp-cook.md` — skill-aware execution with domain auto-activation (NEW — skill detection table)
-- [ ] `tp-progress.md` — project-wide status (adapt from GSD progress.md)
-- [ ] `tp-pause.md` — saves session to PROGRESS.md + STATE.md (adapt from GSD pause-work.md)
-- [ ] `tp-resume.md` — restores from PROGRESS.md + STATE.md (adapt from GSD resume-project.md)
-- [ ] `tp-verify.md` — goal-backward verification (adapt from GSD verify-phase.md)
-- [ ] `tp-kanban.md` — visual dashboard phases + plans (adapt from CCS kanban.md)
+- [x] `myai:new-project.md`
+- [x] `myai:plan.md` — task / phase / parallel scope
+- [x] `myai:cook.md` — sequential + parallel multi-agent mode
+- [x] `myai:progress.md`
+- [x] `myai:pause.md`
+- [x] `myai:resume.md`
+- [x] `myai:verify.md`
+- [x] `myai:validate.md` — interview-based pre-build validation
+- [x] `myai:archive.md` — journal + archive task plans
+- [x] `myai:kanban.md`
 
-**Key decision:** No gsd-tools binary. All state ops are direct file reads/writes by agents.
+**Key decisions:**
+- No binary for state ops — all direct file reads/writes by agents
+- `myai:validate` = interview before build; `myai:verify` = goal check after build
+- `myai:cook --parallel` spawns concurrent fullstack-developer agents
 
 ---
 
 ### Phase 7: Rules & Settings
 **Goal:** 4 rule files, CLAUDE.md runtime template, finalized settings.json.
-**Status:** [ ] Pending
+**Status:** [x] Complete
 **Depends on:** Phase 6
 
 Tasks:
-- [ ] Adapt 4 rules from CCS: development-rules, primary-workflow, orchestration-protocol, documentation-management
-- [ ] Create `runtime-templates/claude/CLAUDE.md` (adapt from CCS CLAUDE.md, add tp: commands, update paths)
-- [ ] Finalize `.tpai/settings.json`
+- [x] Adapt 4 rules from CCS: development-rules, primary-workflow, orchestration-protocol, documentation-management
+- [x] Create `runtime-templates/claude/CLAUDE.md`
+- [x] Finalize `.myai/settings.json`
 
 ---
 
 ### Phase 8: Multi-Runtime Installer
-**Goal:** `tpai install` supports all 4 runtimes.
-**Status:** [ ] Pending
+**Goal:** `myai install` supports all 4 runtimes. `myai update` propagates to runtime dirs.
+**Status:** [x] Complete
 **Depends on:** Phase 7
 
 Tasks:
-- [ ] Implement `lib/commands/install.js` (adapt from GSD install.js pattern)
-- [ ] Claude Code: copy `.tpai/` → `.claude/`, write settings.json, copy CLAUDE.md
-- [ ] OpenCode: create `.opencode/`, write opencode.json with agent registrations
-- [ ] Gemini CLI: write GEMINI.md in project root
-- [ ] Codex: write AGENTS.md in project root
-- [ ] Add `--global` flag for user-level installation
-- [ ] Wire install command in `bin/tpai.js`
+- [x] Implement `lib/commands/install.js`
+- [x] Claude Code: copy `.myai/` → `.claude/`, merge settings.json, copy CLAUDE.md
+- [x] OpenCode: create `.opencode/`, write opencode.json
+- [x] Gemini CLI: write GEMINI.md in project root
+- [x] Codex: write AGENTS.md in project root
+- [x] `--global` flag for user-level installation
+- [x] `myai update` propagates commands/agents/skills/rules/hooks to `.claude/` and `.opencode/`
 
 ---
 
 ### Phase 9: Polish + README + Publish
 **Goal:** Publishable to GitHub Packages. Tests pass.
-**Status:** [ ] Pending
+**Status:** [x] Complete
 **Depends on:** All phases
 
 Tasks:
-- [ ] Write `README.md`
-- [ ] Write `PUBLISHING.md`
-- [ ] Write `scripts/postinstall.cjs` (adapt from CCS)
-- [ ] Write `scripts/prepublish-check.cjs` (validate 29 skills, 12 agents, 8 commands)
-- [ ] Write tests: `init.test.js`, `update.test.js`, `install.test.js`
-- [ ] Add `files` array to `package.json`
-- [ ] Final validation: tpai init, tpai install --all, tpai update
-- [ ] `npm publish`
-
----
-
-## What to Copy vs Build New
-
-### Direct Copy (no modification)
-| Source | Destination |
-|---|---|
-| `CCS/.claude/skills/` (29 curated) | `.tpai/skills/` |
-| `CCS/.claude/agents/` (9 agents) | `.tpai/agents/` |
-| `CCS/.claude/hooks/lib/*.cjs` | `.tpai/hooks/lib/` |
-| `CCS/.claude/hooks/dev-rules-reminder.cjs` | `.tpai/hooks/` |
-| `CCS/.claude/hooks/privacy-block.cjs` | `.tpai/hooks/` |
-| `CCS/.claude/hooks/post-edit-simplify-reminder.cjs` | `.tpai/hooks/` |
-| `CCS/.claude/hooks/usage-context-awareness.cjs` | `.tpai/hooks/` |
-| `CCS/lib/utils/*` | `lib/utils/` |
-
-### Adapt (copy then modify)
-| Source | Destination | Key Changes |
-|---|---|---|
-| `CCS/bin/gkim-claude.js` | `bin/tpai.js` | Rename binary, remove CCS-specific commands |
-| `CCS/.claude/hooks/session-init.cjs` | `.tpai/hooks/session-init.cjs` | Add STATE.md + PROGRESS.md injection |
-| `CCS/.claude/settings.json` | `.tpai/settings.json` | Paths `.claude/` → `.tpai/` |
-| `CCS/.claude/rules/*.md` | `.tpai/rules/` | Remove CCS-specific refs |
-| `CCS/CLAUDE.md` | `runtime-templates/claude/CLAUDE.md` | Add tp: commands, update paths |
-| `CCS/lib/commands/init.js` | `lib/commands/init.js` | Remove GitHub App auth, add docs/ install |
-| `GSD/agents/gsd-verifier.md` | `.tpai/agents/verifier.md` | Remove gsd- prefix, update paths |
-| `GSD/agents/gsd-roadmapper.md` | `.tpai/agents/roadmapper.md` | Update spawning context + output paths |
-| `GSD/agents/gsd-codebase-mapper.md` | `.tpai/agents/codebase-mapper.md` | Update paths, remove gsd-tools |
-| `GSD/templates/project.md` | `docs-templates/PROJECT.md` | Strip XML wrappers |
-| `GSD/templates/roadmap.md` | `docs-templates/ROADMAP.md` | Remove decimal-phase complexity |
-| `GSD/templates/state.md` | `docs-templates/STATE.md` | Strip velocity metrics, add Active Plan pointer |
-| `GSD/workflows/new-project.md` | `.tpai/commands/tp-new-project.md` | Remove gsd-tools, update paths |
-| `GSD/workflows/pause-work.md` | `.tpai/commands/tp-pause.md` | Remove gsd-tools, update paths |
-| `GSD/workflows/resume-project.md` | `.tpai/commands/tp-resume.md` | Remove gsd-tools, update paths |
-| `GSD/workflows/progress.md` | `.tpai/commands/tp-progress.md` | Remove gsd-tools, update paths |
-| `GSD/workflows/verify-phase.md` | `.tpai/commands/tp-verify.md` | Spawn verifier agent |
-| `CCS/.claude/commands/kanban.md` | `.tpai/commands/tp-kanban.md` | Update paths |
-| `CCS/.claude/commands/plan.md` | `.tpai/commands/tp-plan.md` | Add STATE.md context loading, skill auto-detection |
-| `GSD/scripts/build-hooks.js` | `scripts/build-hooks.js` | Update entry/output paths |
-| `GSD/bin/install.js` (pattern) | `lib/commands/install.js` | Rewrite ESM, tpai agent names |
-
-### Write New
-| File | Why |
-|---|---|
-| `docs-templates/SPEC.md` | v1/v2/out-of-scope structure unique to tpai |
-| `plans-templates/PROGRESS.md` | Session-per-plan state (no GSD equivalent) |
-| `.tpai/commands/tp-cook.md` | Skill auto-detection table is unique to tpai |
-| `README.md`, `PUBLISHING.md` | tpai-specific |
-| `tests/*.test.js` | All new |
+- [x] Write `README.md`
+- [x] Write `PUBLISHING.md`
+- [x] Write `scripts/postinstall.cjs`
+- [x] Write `scripts/prepublish-check.cjs`
+- [x] Write tests: `init.test.js`, `update.test.js`, `install.test.js`
+- [x] Final validation: myai init, myai install --all, myai update
 
 ---
 
 ## Key Architectural Decisions
 
-1. **No `gsd-tools.cjs` binary** — all state ops are direct file reads/writes by agents/hooks
-2. **`.tpai/` is the source** — `install` copies it to `.claude/`, `.opencode/`, etc. per runtime
+1. **No binary for state ops** — all state ops are direct file reads/writes by agents/hooks
+2. **`.myai/` is the source** — `install` copies it to `.claude/`, `.opencode/`, etc. per runtime
 3. **Skills are Claude Code-native** — other runtimes get agents + instruction files but not full skill system
 4. **`docs/STATE.md` = project-level; `plans/{plan}/PROGRESS.md` = session-level**
 5. **ESM throughout CLI/lib** — hooks stay `.cjs` (required by Claude Code hook system)
+6. **`myai:validate` vs `myai:verify`** — validate = before build (plan interview); verify = after build (goal check)
+7. **Parallel cook** — `myai:plan --parallel` + `myai:cook --parallel` spawns concurrent agents per phase file
