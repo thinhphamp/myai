@@ -13,8 +13,8 @@
   "author": "Thinh Pham",
   "license": "MIT",
   "publishConfig": {
-    "registry": "https://npm.pkg.github.com/",
-    "@thinhpham:registry": "https://npm.pkg.github.com/"
+    "registry": "https://registry.npmjs.org/",
+    "access": "public"
   },
   "files": [
     ".myai/",
