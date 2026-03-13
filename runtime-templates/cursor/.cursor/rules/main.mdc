@@ -40,6 +40,8 @@ Analyze user requirements, delegate tasks to appropriate sub-agents, and ensure 
 | `/myai:verify [phase]` | Goal-backward verification after building |
 | `/myai:archive [plan]` | Archive completed task plans |
 | `/myai:kanban` | Visual plans dashboard |
+| `/docs:init` | Generate all deeper docs/ files from codebase analysis (first time) |
+| `/docs:update [scope]` | Sync docs/ files based on recent code changes |
 
 ## Project Brain (docs/)
 

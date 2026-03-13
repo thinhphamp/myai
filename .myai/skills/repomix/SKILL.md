@@ -214,12 +214,40 @@ When user requests repository packaging:
    - Determine output format needed
    - Check for sensitive data concerns
 
-2. **Configure Filters**
+2. **Generate `.repomixignore`** (if it doesn't exist)
+
+   Always create `.repomixignore` before running repomix on a local repo:
+   ```
+   docs/*
+   plans/*
+   assets/*
+   dist/*
+   coverage/*
+   build/*
+   ios/*
+   android/*
+   tests/*
+   __tests__/*
+   __pycache__/*
+   node_modules/*
+
+   .opencode/*
+   .claude/*
+   .serena/*
+   .pnpm-store/*
+   .github/*
+   .dart_tool/*
+   .idea/*
+   .husky/*
+   .venv/*
+   ```
+
+3. **Configure Filters**
    - Set include patterns for relevant files
    - Add ignore patterns for unnecessary files
    - Enable/disable comment removal
 
-3. **Execute Packaging**
+4. **Execute Packaging**
    - Run repomix with appropriate options
    - Monitor token counts
    - Verify security checks

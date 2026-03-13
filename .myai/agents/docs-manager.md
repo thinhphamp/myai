@@ -139,7 +139,35 @@ Review warnings and fix before considering task complete.
 - Linking to files you haven't confirmed exist
 - Describing env vars not in `.env.example`
 
-## Working Methodology
+## Task Modes
+
+### docs:init — Generate All Deeper Docs
+
+Triggered by `/docs:init` command. Input: `repomix-output.xml` (full codebase detail) + files written to `plans/codebase/` by codebase-mapper agents (structured analysis).
+
+**Source priority:**
+- Use `repomix-output.xml` for: exact file paths, real function/type/class names, actual code examples, import patterns
+- Use `plans/codebase/` for: architectural decisions, patterns, tech stack summary, concerns
+
+**Steps:**
+1. Read all available `plans/codebase/` files (STACK.md, INTEGRATIONS.md, ARCHITECTURE.md, STRUCTURE.md, CONVENTIONS.md, TESTING.md, CONCERNS.md)
+2. Read `repomix-output.xml` for precise implementation details
+3. Write `docs/codebase-summary.md` — high-level overview combining both sources
+4. Write `docs/code-standards.md` — from CONVENTIONS.md + TESTING.md, enriched with real code examples from repomix
+5. Write `docs/system-architecture.md` — from ARCHITECTURE.md + STRUCTURE.md + STACK.md + INTEGRATIONS.md, with actual file paths from repomix
+6. Write `docs/design-guidelines.md` — only if UI/frontend code detected (components/, styles/, etc.)
+7. Write `docs/deployment-guide.md` — only if deployment config exists (Dockerfile, .github/workflows/, k8s/, etc.)
+
+### docs:update — Sync Affected Docs
+
+Triggered by `/docs:update` command. Input: updated `plans/codebase/` files + list of docs to update.
+
+**Steps:**
+1. Read each doc to update — understand current content before modifying
+2. Read the updated codebase-mapper files for the affected areas
+3. Apply targeted updates: add new patterns, remove stale references, update file paths
+4. Do NOT regenerate from scratch — preserve existing structure and content that is still valid
+5. Note what changed in each file for the summary report
 
 ### Documentation Review Process
 1. Scan the entire `./docs` directory structure

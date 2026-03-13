@@ -72,7 +72,7 @@ Default to task plan for any specific request. Only use phase plan when explicit
 - `code-reviewer` — reviews code quality
 - `tester` — writes and runs tests
 - `debugger` — diagnoses bugs
-- `docs-manager` — writes and maintains documentation
+- `docs-manager` — writes and maintains documentation. Spawn with task `docs:init` to generate all deeper docs/ files from codebase analysis; task `docs:update` to sync docs after code changes
 - `git-manager` — handles git workflows and commit strategy
 - `ui-ux-designer` — designs UI components and flows
 - `codebase-mapper` — maps and documents existing codebase structure

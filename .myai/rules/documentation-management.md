@@ -6,11 +6,38 @@ The `docs/` folder is the project brain — keep it current and accurate.
 
 ```
 docs/
-├── PROJECT.md      # Vision, goals, tech stack, constraints, key decisions
-├── SPEC.md         # v1/v2/out-of-scope requirements with acceptance criteria
-├── ROADMAP.md      # Phases with success criteria and progress tracking
-└── STATE.md        # Active plan pointer + decisions + blockers (≤80 lines)
+├── PROJECT.md           # Vision, goals, tech stack, constraints, key decisions
+├── SPEC.md              # v1/v2/out-of-scope requirements with acceptance criteria
+├── ROADMAP.md           # Phases with success criteria and progress tracking
+├── STATE.md             # Active plan pointer + decisions + blockers (≤80 lines, auto-injected)
+├── codebase-summary.md  # High-level codebase overview (on-demand)
+├── code-standards.md    # Coding conventions and patterns (on-demand)
+├── system-architecture.md  # Architecture and service design (on-demand)
+├── design-guidelines.md    # UI/UX patterns and styling rules (on-demand)
+└── deployment-guide.md     # Deploy, CI/CD, infra instructions (on-demand)
 ```
+
+### On-Demand Read Rules
+
+`STATE.md` is auto-injected every session. All other docs are read on-demand:
+
+| Doc | Read when... |
+|-----|-------------|
+| `PROJECT.md` + `SPEC.md` | Before planning or implementing any feature |
+| `code-standards.md` | Before implementing, reviewing, or refactoring code |
+| `codebase-summary.md` | Before planning, debugging, or onboarding questions |
+| `system-architecture.md` | Before architectural decisions or adding new services/modules |
+| `design-guidelines.md` | Before building UI components, styling, or design reviews |
+| `deployment-guide.md` | Before deploying, writing CI/CD config, or infra changes |
+
+### Generating Deeper Docs
+
+Use these commands to generate or sync the deeper docs/ files:
+
+| Command | When to use |
+|---------|-------------|
+| `/docs:init` | First time — analyzes codebase and generates all deeper docs |
+| `/docs:update [scope]` | After significant code changes — syncs affected docs only |
 
 ### Update Triggers
 

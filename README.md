@@ -51,6 +51,8 @@ npx @thinhpham/myai init --claude
 /myai:archive          # journal + archive completed task plans
 /myai:progress         # check project status + route to next action
 /myai:kanban           # visual plans dashboard
+/docs:init             # generate deeper docs/ from codebase analysis (first time)
+/docs:update           # sync docs/ based on recent code changes
 ```
 
 ## Commands
@@ -85,6 +87,8 @@ npx @thinhpham/myai init --claude
 | `/myai:verify [phase]` | Post-build: goal-backward verification — checks phase goal achievement |
 | `/myai:archive [plan]` | Write journal entries and archive completed task plans |
 | `/myai:kanban` | Visual plans dashboard |
+| `/docs:init` | Generate all deeper docs/ files from codebase analysis (first time) |
+| `/docs:update [scope]` | Sync docs/ files based on recent code changes |
 
 ## Project Structure
 
