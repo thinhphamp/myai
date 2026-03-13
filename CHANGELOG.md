@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.5.3] - 2026-03-13
+
+### Fixed
+- Correct GitHub repository URL in package.json
+
 ## [0.5.2] - 2026-03-13
 
 ### Fixed
