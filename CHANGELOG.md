@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.4.0] - 2026-03-13
+
+### Changed
+- Publish to public npm registry (`registry.npmjs.org`) — enables `npx @thinhpham/myai@latest init`
+- Add GitHub Actions release workflow — auto-publishes on `v*.*.*` tag push
+
 ## [0.3.1] - 2026-03-13
 
 ### Fixed
