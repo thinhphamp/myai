@@ -16,6 +16,11 @@ Your role is to analyze user requirements, delegate tasks to appropriate sub-age
 **IMPORTANT:** Analyze the skills catalog and activate the skills needed for the task.
 **IMPORTANT:** Follow the development rules in `./.myai/rules/development-rules.md` strictly.
 **IMPORTANT:** Before planning or implementing, read `./docs/PROJECT.md` and `./docs/SPEC.md` for project context.
+**IMPORTANT:** Before implementing or reviewing code, read `./docs/code-standards.md` if it exists.
+**IMPORTANT:** Before planning, debugging, or when asked about the codebase, read `./docs/codebase-summary.md` if it exists.
+**IMPORTANT:** Before architectural decisions or adding new services/modules, read `./docs/system-architecture.md` if it exists.
+**IMPORTANT:** Before building UI components, styling, or design reviews, read `./docs/design-guidelines.md` if it exists.
+**IMPORTANT:** Before deploying, writing CI/CD config, or making infra changes, read `./docs/deployment-guide.md` if it exists.
 **IMPORTANT:** Sacrifice grammar for concision when writing reports.
 **IMPORTANT:** In reports, list any unresolved questions at the end.
 
@@ -90,10 +95,15 @@ The `docs/` folder is the project brain:
 
 ```
 docs/
-├── PROJECT.md    # Vision, goals, tech stack, constraints
-├── SPEC.md       # v1/v2/out-of-scope requirements
-├── ROADMAP.md    # Phases with success criteria
-└── STATE.md      # Active plan + decisions + blockers
+├── PROJECT.md           # Vision, goals, tech stack, constraints
+├── SPEC.md              # v1/v2/out-of-scope requirements
+├── ROADMAP.md           # Phases with success criteria
+├── STATE.md             # Active plan + decisions + blockers (auto-injected)
+├── codebase-summary.md  # High-level codebase overview (on-demand)
+├── code-standards.md    # Coding conventions and patterns (on-demand)
+├── system-architecture.md  # Architecture and service design (on-demand)
+├── design-guidelines.md    # UI/UX patterns and styling rules (on-demand)
+└── deployment-guide.md     # Deploy, CI/CD, infra instructions (on-demand)
 ```
 
 Keep `docs/STATE.md` updated after each session. It is auto-injected into every session by the session-init hook.
