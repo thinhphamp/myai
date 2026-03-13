@@ -12,7 +12,7 @@ Most AI coding tools are powerful but stateless — every session starts from sc
 
 It installs a structured workflow system into any project:
 
-- **Persistent memory** — `docs/` brain layer (PROJECT.md, SPEC.md, ROADMAP.md, STATE.md) injected into every session automatically
+- **Persistent memory** — `docs/` brain layer: `STATE.md` auto-injected every session; deeper docs (`code-standards`, `system-architecture`, etc.) read on-demand by task type
 - **Structured workflow** — brainstorm → plan → validate → build → archive, not just "chat and hope"
 - **14 agents** — brainstormer, planner, researcher, fullstack-developer, code-reviewer, tester, debugger, ops-manager, and more
 - **30 skills** — domain expertise for React, Next.js, NestJS, databases, auth, payments, mobile, AI, and more
@@ -104,10 +104,15 @@ your-project/
 │   └── settings.json   # Hook configuration
 │
 ├── docs/               # Project brain (yours — myai never overwrites)
-│   ├── PROJECT.md      # Vision, goals, tech stack, constraints
-│   ├── SPEC.md         # v1/v2/out-of-scope requirements
-│   ├── ROADMAP.md      # Phases with success criteria
-│   └── STATE.md        # Active plan + decisions + blockers
+│   ├── PROJECT.md           # Vision, goals, tech stack, constraints
+│   ├── SPEC.md              # v1/v2/out-of-scope requirements
+│   ├── ROADMAP.md           # Phases with success criteria
+│   ├── STATE.md             # Active plan + decisions + blockers (auto-injected)
+│   ├── codebase-summary.md  # High-level codebase overview (on-demand)
+│   ├── code-standards.md    # Coding conventions and patterns (on-demand)
+│   ├── system-architecture.md  # Architecture and service design (on-demand)
+│   ├── design-guidelines.md    # UI/UX patterns and styling rules (on-demand)
+│   └── deployment-guide.md     # Deploy, CI/CD, infra instructions (on-demand)
 │
 └── plans/              # Execution plans (yours)
     └── {date}-{slug}/
