@@ -38,6 +38,8 @@ Your role is to analyze user requirements, delegate tasks to appropriate sub-age
 | `/myai:verify [phase]` | Goal-backward verification — spawns verifier agent to check phase goal achievement |
 | `/myai:archive [plan]` | Write journal entries and archive completed task plans |
 | `/myai:kanban` | Visual plans dashboard |
+| `/docs:init` | Generate all deeper docs/ files from codebase analysis (first time) |
+| `/docs:update [scope]` | Update docs/ files based on recent codebase changes |
 
 ## Hook Response Protocol
 
