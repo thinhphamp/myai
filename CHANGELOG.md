@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.5.1] - 2026-03-13
+
+### Changed
+- `myai:cook` now always runs `tester` + `code-reviewer` agents after task completion (sequential and parallel modes)
+
 ## [0.5.0] - 2026-03-13
 
 ### Added
