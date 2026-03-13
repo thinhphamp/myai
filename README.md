@@ -28,11 +28,21 @@ npm install -g @thinhpham/myai
 
 # 2. Initialize a project
 cd your-project
-myai init --claude     # copies .myai/ system + docs/ templates, wires hooks into .claude/
+myai init              # installs .myai/ system, docs/ brain layer, plans/templates/
 
-# 3. Open Claude Code — session-init hook loads your project state automatically
+# 3. Wire your runtime (pick one or combine with init)
+myai install --claude  # Claude Code: copies agents/skills/hooks into .claude/, creates CLAUDE.md
+myai install --opencode  # OpenCode: copies system into .opencode/
+myai install --gemini  # Gemini CLI: creates GEMINI.md
+myai install --codex   # Codex: creates AGENTS.md
+myai install --all     # all four runtimes at once
 
-# 4. Use slash commands in Claude Code
+# Shortcut: init + install in one step
+myai init --claude
+
+# 4. Open Claude Code — session-init hook loads your project state automatically
+
+# 5. Use slash commands in Claude Code
 /myai:new-project      # guided setup: creates PROJECT.md, SPEC.md, ROADMAP.md, STATE.md
 /myai:plan [task]      # create an execution plan with skill auto-detection
 /myai:validate         # interview-based validation — confirm open questions before building
@@ -49,13 +59,15 @@ myai init --claude     # copies .myai/ system + docs/ templates, wires hooks int
 
 | Command | Description |
 |---------|-------------|
-| `myai init` | Install `.myai/` system + `docs/` templates into current project |
-| `myai install --claude` | Wire hooks into `.claude/` for Claude Code |
-| `myai install --opencode` | Install for OpenCode |
-| `myai install --gemini` | Create `GEMINI.md` for Gemini CLI |
-| `myai install --codex` | Create `AGENTS.md` for Codex |
-| `myai install --all` | Install for all runtimes |
-| `myai install --global` | Install to user-level config dirs |
+| `myai init` | Install `.myai/` system + `docs/` brain layer + `plans/templates/` into current project. Does not wire any runtime — run `myai install` after. |
+| `myai init --claude` | Init + install for Claude Code in one step |
+| `myai init --all` | Init + install for all runtimes in one step |
+| `myai install --claude` | Copy agents/skills/commands/hooks into `.claude/`, merge hooks into `settings.json`, create `CLAUDE.md` |
+| `myai install --opencode` | Copy system into `.opencode/`, create `opencode.json` |
+| `myai install --gemini` | Create `GEMINI.md` in project root (or `~/.gemini/GEMINI.md` with `--global`) |
+| `myai install --codex` | Create `AGENTS.md` in project root (or `~/.codex/AGENTS.md` with `--global`) |
+| `myai install --all` | Install for all four runtimes |
+| `myai install --global` | Install to user-level config dirs instead of project dir |
 | `myai update` | Interactive merge of latest system files |
 | `myai validate [phase]` | Print a plan phase to validate it matches requirements (defaults to latest plan) |
 | `myai validate [phase] --plan <name>` | Validate a phase from a specific plan folder |
