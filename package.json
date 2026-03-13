@@ -1,6 +1,6 @@
 {
   "name": "@thinhpham/myai",
-  "version": "0.3.1",
+  "version": "0.4.0",
   "description": "Meta-prompting, context engineering, and spec-driven development for Claude Code, OpenCode, Gemini CLI, and Codex",
   "type": "module",
   "bin": {
