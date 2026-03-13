@@ -73,11 +73,11 @@ check('.myai/hooks/lib/privacy-checker.cjs');
 check('.myai/hooks/lib/project-detector.cjs');
 check('.myai/hooks/lib/scout-checker.cjs');
 
-// Agents (12 required)
+// Agents (13 required)
 const REQUIRED_AGENTS = [
   'planner', 'researcher', 'fullstack-developer', 'code-reviewer',
   'tester', 'debugger', 'git-manager', 'docs-manager', 'ui-ux-designer',
-  'verifier', 'roadmapper', 'codebase-mapper'
+  'verifier', 'roadmapper', 'brainstormer', 'ops-manager'
 ];
 for (const agent of REQUIRED_AGENTS) {
   check(`.myai/agents/${agent}.md`, 'agent');
