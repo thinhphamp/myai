@@ -106,6 +106,15 @@ docs/
 └── deployment-guide.md     # Deploy, CI/CD, infra instructions (on-demand)
 ```
 
-Keep `docs/STATE.md` updated after each session. It is auto-injected into every session by the session-init hook.
+Keep `docs/STATE.md` updated after each session. It is auto-injected every session via the session-init hook. All other docs are read on-demand:
 
-**IMPORTANT:** *MUST READ* and *MUST COMPLY* with all instructions in this CLAUDE.md, especially the WORKFLOWS section. This is *MANDATORY. NON-NEGOTIABLE. NO EXCEPTIONS.*
+| Doc | Read when... |
+|-----|-------------|
+| `PROJECT.md` + `SPEC.md` | Before planning or implementing any feature |
+| `code-standards.md` | Before implementing, reviewing, or refactoring code |
+| `codebase-summary.md` | Before planning, debugging, or onboarding questions |
+| `system-architecture.md` | Before architectural decisions or adding new services/modules |
+| `design-guidelines.md` | Before building UI components, styling, or design reviews |
+| `deployment-guide.md` | Before deploying, writing CI/CD config, or infra changes |
+
+**For subagents:** When spawning agents via Task tool, include the relevant docs above in the agent prompt based on the task type. Agents do not inherit session context automatically.
