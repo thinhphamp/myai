@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.5.2] - 2026-03-13
+
+### Fixed
+- Release workflow: add missing `NODE_AUTH_TOKEN` to publish step (required alongside `--provenance` for npm trusted publishing)
+
 ## [0.5.1] - 2026-03-13
 
 ### Changed
