@@ -28,6 +28,7 @@ program
   .option('--opencode', 'Also install for OpenCode (.opencode/)')
   .option('--gemini', 'Also install for Gemini CLI (GEMINI.md)')
   .option('--codex', 'Also install for Codex (AGENTS.md)')
+  .option('--cursor', 'Also install for Cursor (.cursor/rules/)')
   .option('--all', 'Also install for all runtimes')
   .option('--global', 'Install globally (user-level config dirs)')
   .action(init);
@@ -44,6 +45,7 @@ program
   .option('--opencode', 'Install for OpenCode')
   .option('--gemini', 'Install for Gemini CLI')
   .option('--codex', 'Install for Codex')
+  .option('--cursor', 'Install for Cursor (.cursor/rules/)')
   .option('--all', 'Install for all runtimes')
   .option('--global', 'Install globally (user-level config dirs)')
   .action(install);
