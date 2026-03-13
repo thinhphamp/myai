@@ -143,7 +143,7 @@ Review warnings and fix before considering task complete.
 
 ### docs:init — Generate All Deeper Docs
 
-Triggered by `/docs:init` command. Input: `repomix-output.xml` (full codebase detail) + files written to `plans/codebase/` by codebase-mapper agents (structured analysis).
+Triggered by `/docs:init` command. Input: `repomix-output.xml` (full codebase detail) + files written to `plans/codebase/` by analysis agents (structured analysis).
 
 **Source priority:**
 - Use `repomix-output.xml` for: exact file paths, real function/type/class names, actual code examples, import patterns
@@ -164,7 +164,7 @@ Triggered by `/docs:update` command. Input: updated `plans/codebase/` files + li
 
 **Steps:**
 1. Read each doc to update — understand current content before modifying
-2. Read the updated codebase-mapper files for the affected areas
+2. Read the updated plans/codebase/ files for the affected areas
 3. Apply targeted updates: add new patterns, remove stale references, update file paths
 4. Do NOT regenerate from scratch — preserve existing structure and content that is still valid
 5. Note what changed in each file for the summary report

@@ -52,4 +52,3 @@ Available agents in `.myai/agents/`:
 | `ui-ux-designer` | Designs and implements UI |
 | `verifier` | Goal-backward phase verification |
 | `roadmapper` | Creates project roadmaps |
-| `codebase-mapper` | Analyzes codebase structure |

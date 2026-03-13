@@ -19,16 +19,20 @@ docs/
 
 ### On-Demand Read Rules
 
-`STATE.md` is auto-injected every session. All other docs are read on-demand:
+`STATE.md` is auto-injected every session. All other docs are read on-demand — only when the task requires it.
 
-| Doc | Read when... |
-|-----|-------------|
-| `PROJECT.md` + `SPEC.md` | Before planning or implementing any feature |
-| `code-standards.md` | Before implementing, reviewing, or refactoring code |
-| `codebase-summary.md` | Before planning, debugging, or onboarding questions |
-| `system-architecture.md` | Before architectural decisions or adding new services/modules |
-| `design-guidelines.md` | Before building UI components, styling, or design reviews |
-| `deployment-guide.md` | Before deploying, writing CI/CD config, or infra changes |
+| Doc | Path | Read when... |
+|-----|------|-------------|
+| `PROJECT.md` + `SPEC.md` | `docs/PROJECT.md`, `docs/SPEC.md` | Before planning or implementing any feature |
+| `code-standards.md` | `docs/code-standards.md` | Before implementing, reviewing, or refactoring code |
+| `codebase-summary.md` | `docs/codebase-summary.md` | Before planning, debugging, or onboarding questions |
+| `system-architecture.md` | `docs/system-architecture.md` | Before architectural decisions or adding new services/modules |
+| `design-guidelines.md` | `docs/design-guidelines.md` | Before building UI components, styling, or design reviews |
+| `deployment-guide.md` | `docs/deployment-guide.md` | Before deploying, writing CI/CD config, or infra changes |
+
+**If a doc doesn't exist:** skip it and inform the user to run `/docs:init` to generate it.
+
+**For subagents:** When spawning agents via Task tool, include the relevant docs from the list above in the agent prompt based on the task type. Agents do not inherit session context automatically.
 
 ### Generating Deeper Docs
 
@@ -81,7 +85,7 @@ plans/
 │   └── SUMMARY.md       # Completion record (written by /myai:cook)
 ├── 2026-03-12-verify/
 │   └── VERIFICATION.md  # Written by verifier agent
-└── codebase/            # Written by codebase-mapper agent
+└── codebase/            # Written by docs:init analysis agents
     ├── STACK.md
     ├── ARCHITECTURE.md
     └── CONVENTIONS.md
