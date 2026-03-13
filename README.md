@@ -18,7 +18,7 @@ It installs a structured workflow system into any project:
 - **30 skills** — domain expertise for React, Next.js, NestJS, databases, auth, payments, mobile, AI, and more
 - **8 slash commands** — project lifecycle from first idea to shipping
 - **5 hooks** — session-init loads your project state; privacy-block protects sensitive files
-- **Multi-runtime** — one install, works with Claude Code, OpenCode, Gemini CLI, and Codex
+- **Multi-runtime** — one install, works with Claude Code, OpenCode, Gemini CLI, Codex, and Cursor
 
 ## Quick Start
 
@@ -31,11 +31,12 @@ cd your-project
 myai init              # installs .myai/ system, docs/ brain layer, plans/templates/
 
 # 3. Wire your runtime (pick one or combine with init)
-myai install --claude  # Claude Code: copies agents/skills/hooks into .claude/, creates CLAUDE.md
-myai install --opencode  # OpenCode: copies system into .opencode/
-myai install --gemini  # Gemini CLI: creates GEMINI.md
-myai install --codex   # Codex: creates AGENTS.md
-myai install --all     # all four runtimes at once
+myai install --claude   # Claude Code: copies agents/skills/hooks into .claude/, creates CLAUDE.md
+myai install --opencode # OpenCode: copies system into .opencode/
+myai install --gemini   # Gemini CLI: creates GEMINI.md
+myai install --codex    # Codex: creates AGENTS.md
+myai install --cursor   # Cursor: creates .cursor/rules/main.mdc
+myai install --all      # all five runtimes at once
 
 # Shortcut: init + install in one step
 myai init --claude
@@ -66,7 +67,8 @@ myai init --claude
 | `myai install --opencode` | Copy system into `.opencode/`, create `opencode.json` |
 | `myai install --gemini` | Create `GEMINI.md` in project root (or `~/.gemini/GEMINI.md` with `--global`) |
 | `myai install --codex` | Create `AGENTS.md` in project root (or `~/.codex/AGENTS.md` with `--global`) |
-| `myai install --all` | Install for all four runtimes |
+| `myai install --cursor` | Create `.cursor/rules/main.mdc` in project root (project-scoped only) |
+| `myai install --all` | Install for all five runtimes |
 | `myai install --global` | Install to user-level config dirs instead of project dir |
 | `myai update` | Interactive merge of latest system files |
 | `myai validate [phase]` | Print a plan phase to validate it matches requirements (defaults to latest plan) |
@@ -146,6 +148,7 @@ Each feature branch gets its own plan. Pause one, start another, resume either �
 | **OpenCode** | `myai install --opencode` | Agents + instructions |
 | **Gemini CLI** | `myai install --gemini` | Instructions (GEMINI.md) |
 | **Codex** | `myai install --codex` | Instructions (AGENTS.md) |
+| **Cursor** | `myai install --cursor` | Instructions (.cursor/rules/main.mdc) |
 
 ## Requirements
 
