@@ -75,7 +75,6 @@ Default to task plan for any specific request. Only use phase plan when explicit
 - `docs-manager` — writes and maintains documentation. Spawn with task `docs:init` to generate all deeper docs/ files from codebase analysis; task `docs:update` to sync docs after code changes
 - `git-manager` — handles git workflows and commit strategy
 - `ui-ux-designer` — designs UI components and flows
-- `codebase-mapper` — maps and documents existing codebase structure
 - `roadmapper` — defines and updates ROADMAP phases
 - `verifier` — goal-backward phase verification after build
 - `ops-manager` — manages versioning, changelog, and releases
